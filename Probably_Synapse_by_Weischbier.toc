@@ -3,5 +3,7 @@
 ## Notes: Custom Frost Death Knight Routine made by Weischbier
 ## Dependencies: Probably
 
+lib.lua
 DualWield.lua
 Twohanded.lua
+PvP.lua

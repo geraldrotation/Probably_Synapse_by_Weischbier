@@ -1,4 +1,4 @@
-ProbablyEngine.rotation.register_custom(251, "Twohanded made by Weischbier v1.0", 
+ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier v1.0", 
 { -- Combat	
 	{{ -- Non Rotational Abilities
 		{{ -- Interrupts
@@ -26,8 +26,7 @@ ProbablyEngine.rotation.register_custom(251, "Twohanded made by Weischbier v1.0"
 					"target.boss",								-- Potion of Mogu Power when our target is a boss AND
 					"player.buff(51271)" }},					-- Potion of Mogu Power when player has Pillar of Frost Buff AND
 			}, { "!player.buff(105706)",						-- Potion of Mogu Power without Potion of Mogu Power Buff AND
-				 "modifier.cooldowns" }},						-- Potion of Mogu Power with modifier Cooldowns enabled
-			
+				 "modifier.cooldowns" }},						-- Potion of Mogu Power with modifier Cooldowns enabled			
 			
 			{ "#5512", "player.health < 20", },					-- Healthstone with less than 20% health AND
 	
