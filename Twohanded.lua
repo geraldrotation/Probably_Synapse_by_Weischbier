@@ -16,6 +16,11 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier
 		}, "modifier.interrupt" }, 								-- Interrupts with Interrupt modifier enabled
 	
 		{{ -- Items			
+			{ "#76095", {										-- Potion of Mogu Power
+				"modifier.cooldowns",							-- Potion of Mogu Power with modifier Cooldowns enabled AND
+				"@Synapse.PotionOfMoguPower()",					-- Potion of Mogu Power with custom function AND
+				"!player.buff(105706)" }},						-- Potion of Mogu Power when we don't have Potion of Mogu Power buff
+				
 			{ "#5512", {										-- Healthstone
 				"@Synapse.Healthstone()",						-- Healthstone with custom function AND
 				"player.health < 20" }},						-- Healthstone with less than 20% health

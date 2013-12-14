@@ -19,7 +19,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 			{ "#76095", {										-- Potion of Mogu Power
 				"modifier.cooldowns",							-- Potion of Mogu Power with modifier Cooldowns enabled AND
 				"@Synapse.PotionOfMoguPower()",					-- Potion of Mogu Power with custom function AND
-				"!player.buff(105706)" },						-- Potion of Mogu Power when we don't have Potion of Mogu Power buff
+				"!player.buff(105706)" }},						-- Potion of Mogu Power when we don't have Potion of Mogu Power buff
 			
 			{ "#5512", {										-- Healthstone
 				"@Synapse.Healthstone()",						-- Healthstone with custom function AND
