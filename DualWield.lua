@@ -16,25 +16,21 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 		}, "modifier.interrupt" }, 								-- Interrupts with Interrupt modifier enabled
 	
 		{{ -- Items
-			{{													-- Potion of Mogu Power
-				{ "#76095", "player.buff(2825)" },				-- Potion of Mogu Power with Heroism OR
-				{ "#76095", "player.buff(32182)" },				-- Potion of Mogu Power with Bloodlust OR
-				{ "#76095", "player.buff(80353)" },				-- Potion of Mogu Power with Time Warp OR
-				{ "#76095", "player.buff(90355)" },				-- Potion of Mogu Power with Ancient Hysteria OR
-				{ "#76095", {									-- Potion of Mogu Power
-					"target.health < 35",						-- Potion of Mogu Power when our target has less than 35% health AND
-					"target.boss",								-- Potion of Mogu Power when our target is a boss AND
-					"player.buff(51271)" }},					-- Potion of Mogu Power when player has Pillar of Frost Buff AND
-			}, { "!player.buff(105706)",						-- Potion of Mogu Power without Potion of Mogu Power Buff AND
-				 "modifier.cooldowns" }},						-- Potion of Mogu Power with modifier Cooldowns enabled			
+			{ "#76095", {										-- Potion of Mogu Power
+				"modifier.cooldowns",							-- Potion of Mogu Power with modifier Cooldowns enabled AND
+				"@Synapse.PotionOfMoguPower()",					-- Potion of Mogu Power with custom function AND
+				"!player.buff(105706)" },						-- Potion of Mogu Power when we don't have Potion of Mogu Power buff
 			
-			{ "#5512", "player.health < 20", },					-- Healthstone with less than 20% health AND
+			{ "#5512", {										-- Healthstone
+				"@Synapse.Healthstone()",						-- Healthstone with custom function AND
+				"player.health < 20" }},						-- Healthstone with less than 20% health
 	
 			{ "#89640", { 										-- Life Spirit
+				"@Synapse.LifeSpirit()",						-- Life Spirit with custom function AND
 				"player.health < 40",							-- Life Spirit with less than 40% health AND
 				"!player.buff(130649)" }},						-- Life Spirit with no Life Spirit Buff
 			
-			{ "#77589", "modifier.multitarget" }				-- G91 Landshark with modifier Multitarget enabled
+			{ "#77589", "@Synapse.Landshark()" }				-- G91 Landshark with custom function
 		}}, -- End of Items
 		
 		{{ -- Defensive Cooldowns
@@ -99,7 +95,9 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 		{{ -- Offensive Cooldowns; Let's line them up properly, it doesn't make sense to cast them async.			
 			{ "51271" },										-- Pillar of Frost		
 			
-			{ "#gloves", "player.buff(51271)" },				-- Synapse Springs with Pillar of Frost Buff applied	
+			{ "#gloves", {										-- Synapse Springs
+				"@Synapse.SynapseSprings()",					-- Synapse Springs with custom function
+				"player.buff(51271)" }},						-- Synapse Springs with Pillar of Frost Buff applied	
 			
 			{ "46584", {										-- Raise Dead
 				"modifier.cooldowns",							-- Raise Dead with Cooldowns modifier enabled AND

@@ -75,7 +75,7 @@ ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.set
 ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.setUnflagged)
 
 -- Potion of Mogu Power
-function Synapse.PotionOfMoguPower
+function Synapse.PotionOfMoguPower()
 	if not (UnitBuff("player", 2825) or
 			UnitBuff("player", 32182) or 
 			UnitBuff("player", 80353) or
@@ -89,7 +89,7 @@ function Synapse.PotionOfMoguPower
 end
 
 -- Synapse Springs check
-function Synapse.SynapseSprings
+function Synapse.SynapseSprings()
   local hasEngi = false
   for i=1,9 do
     if select(7,GetProfessionInfo(i)) == 202 then 
@@ -110,7 +110,7 @@ function Synapse.SynapseSprings
 end
 
 -- G91 Landshark
-function Synapse.Landshark
+function Synapse.Landshark()
   if GetItemCount(77589, false, false) > 0 then
     if not Synapse.items[77589] then return true end
     if Synapse.items[77589].exp ~= 0 and
@@ -119,7 +119,7 @@ function Synapse.Landshark
 end
 
 -- Life Spirit
-function Synapse.LifeSpirit
+function Synapse.LifeSpirit()
   if GetItemCount(89640, false, false) > 0 then
     if not Synapse.items[89640] then return true end
     if Synapse.items[89640].exp ~= 0 and
@@ -128,7 +128,7 @@ function Synapse.LifeSpirit
 end
 
 -- Healthstone
-function Synapse.Healthstone
+function Synapse.Healthstone()
   if GetItemCount(5512, false, true) > 0 then
     if not Synapse.items[5512] then return true end
     if Synapse.items[5512].exp ~= 0 and

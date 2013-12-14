@@ -6,35 +6,26 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier
 			
 			{ "108194", {										-- Asphyxiate
 				"player.spell(108194).exists",					-- Asphyxiate when Asphyxiate exists in our Spellbook AND
-				"player.spell(47528).cooldown < 15",			-- Asphyxiate with Mind Freeze less than 15s cooldowntime remaining AND
+				"player.spell(47528).cooldown < 15",			-- Asphyxiate with Mind Freeze less than 12s cooldowntime remaining AND
 				"target.casting", }},							-- Asphyxiate with a casting target
 			
 			{ "47476", {										-- Strangulate
 				"player.spell(47476).exists",					-- Strangulate when Strangulate exists in our Spellbook AND
-				"player.spell(47528).cooldown < 15",			-- Strangulate with Mind Freeze less than 15s cooldowntime remaining AND
+				"player.spell(47528).cooldown < 15",			-- Strangulate with Mind Freeze less than 12s cooldowntime remaining AND
 				"target.casting", }},							-- Strangulate with a casting target
 		}, "modifier.interrupt" }, 								-- Interrupts with Interrupt modifier enabled
 	
-		{{ -- Items
-			{{													-- Potion of Mogu Power
-				{ "#76095", "player.buff(2825)" },				-- Potion of Mogu Power with Heroism OR
-				{ "#76095", "player.buff(32182)" },				-- Potion of Mogu Power with Bloodlust OR
-				{ "#76095", "player.buff(80353)" },				-- Potion of Mogu Power with Time Warp OR
-				{ "#76095", "player.buff(90355)" },				-- Potion of Mogu Power with Ancient Hysteria OR
-				{ "#76095", {									-- Potion of Mogu Power
-					"target.health < 35",						-- Potion of Mogu Power when our target has less than 35% health AND
-					"target.boss",								-- Potion of Mogu Power when our target is a boss AND
-					"player.buff(51271)" }},					-- Potion of Mogu Power when player has Pillar of Frost Buff AND
-			}, { "!player.buff(105706)",						-- Potion of Mogu Power without Potion of Mogu Power Buff AND
-				 "modifier.cooldowns" }},						-- Potion of Mogu Power with modifier Cooldowns enabled			
-			
-			{ "#5512", "player.health < 20", },					-- Healthstone with less than 20% health AND
+		{{ -- Items			
+			{ "#5512", {										-- Healthstone
+				"@Synapse.Healthstone()",						-- Healthstone with custom function AND
+				"player.health < 20" }},						-- Healthstone with less than 20% health
 	
 			{ "#89640", { 										-- Life Spirit
+				"@Synapse.LifeSpirit()",						-- Life Spirit with custom function AND
 				"player.health < 40",							-- Life Spirit with less than 40% health AND
 				"!player.buff(130649)" }},						-- Life Spirit with no Life Spirit Buff
 			
-			{ "#77589", "modifier.multitarget" }				-- G91 Landshark with modifier Multitarget enabled
+			{ "#77589", "@Synapse.Landshark()" }				-- G91 Landshark with custom function
 		}}, -- End of Items
 		
 		{{ -- Defensive Cooldowns
@@ -99,7 +90,9 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier
 		{{ -- Offensive Cooldowns; Let's line them up properly, it doesn't make sense to cast them async.			
 			{ "51271" },										-- Pillar of Frost		
 			
-			{ "#gloves", "player.buff(51271)" },				-- Synapse Springs with Pillar of Frost Buff applied	
+			{ "#gloves", {										-- Synapse Springs
+				"@Synapse.SynapseSprings()",					-- Synapse Springs with custom function
+				"player.buff(51271)" }},						-- Synapse Springs with Pillar of Frost Buff applied	
 			
 			{ "46584", {										-- Raise Dead
 				"modifier.cooldowns",							-- Raise Dead with Cooldowns modifier enabled AND
@@ -127,7 +120,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier
 				
 		}, "target.range <= 13" },								-- Offensive Cooldowns with our target at least 13f close to us
 
-		{{ -- Misc Talents; Tier 6, Pestilence
+		{{ -- Misc Talents; Blood Tap, Tier 6, Pestilence
 			{ "69070", {										-- Rocket Jump (Gobin racial)
 				"target.distance > 15",							-- Rocket Jump when our target is more than 15f away from player AND
 				"player.spell(69070).exists" }},				-- Rocket Jump exists in our Spellbook
@@ -140,12 +133,17 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Twohanded made by Weischbier
 				"target.distance > 15",							-- Deaths Advance when our target is more than 15f away from player AND
 				"player.spell(96268).exists",					-- Deaths Advance when Deaths Advance exists in our Spellbook AND
 				"!player.spell(68992).exists" }},				-- Deaths Advance when Dark Flight does not exist in our Spellbook
-				
+			
 			{{
 				{ "108199", "player.spell(108199).exists" },	-- Gorefiend's Graps when Gorfiend's Grasp exists in our Spellbook OR
 				{ "108200", "player.spell(108200).exists" },	-- Remorseless Winter when Remorseless Winter exists in our Spellbook OR
 				{ "108201", "player.spell(108201).exists" },	-- Desecrated Ground when Desecrated Ground exists in our Spellbook AND
-			}, "modifier.ralt" },								-- Tier 6 Talent with Right Alt modifier pressed down			
+			}, "modifier.ralt" },								-- Tier 6 Talent with Right Alt modifier pressed down
+			
+			{ "45529", {										-- Blood Tap
+				"player.runes.depleted",						-- Blood Tap with depleted runes 
+				"player.buff(114851).count >= 5",				-- Blood Tap with at least 5 stacks of Blood Charge
+				"player.spell(45529).exists" }},				-- Blood Tap when Blood Tap exists in our Spellbook
 	
 			{ "50842", {										-- Pestilence; made it available at all time so you don't need to switch rotation styles always. Figured it would make more sense this way. lol
 				"modifier.lcontrol",							-- Pestilence with Left Control (STRG) pressed down AND
