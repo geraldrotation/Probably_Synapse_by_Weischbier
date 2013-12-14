@@ -1,0 +1,7 @@
+## Interface: 50400
+## Title: Probably: Synapse made by Weischbier
+## Notes: Custom Frost Death Knight Routine made by Weischbier
+## Dependencies: Probably
+
+DualWield.lua
+Twohanded.lua
