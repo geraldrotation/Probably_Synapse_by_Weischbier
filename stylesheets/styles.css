@@ -593,7 +593,7 @@ a small {
   color: #666;
   margin-top: -0.6em;
   display: block;
-  }
+}
 
 ul {
   list-style-image: url("../images/bullet.png");
@@ -768,7 +768,7 @@ dt {
 }
 #header nav li.fork {
   float: left;
-  margin-left: 6px;
+  margin-left: 0px;
 }
 #header nav li.downloads {
   float: right;
@@ -782,14 +782,14 @@ dt {
 
 section {
   max-width: 650px;
-  padding: 0px 0px 0px 0px;
+  padding: 30px 0px 50px 0px;
   margin: 20px 0;
   margin-top: 70px;
 }
 section #title {
   border: 0;
   outline: none;
-  margin: 0 0 0 0;
+  margin: 0 0 50px 0;
   padding: 0 0 5px 0;
 }
 section #title h1 {
