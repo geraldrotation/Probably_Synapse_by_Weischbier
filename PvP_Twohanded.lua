@@ -1,29 +1,69 @@
-ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier v1.0", 
-{ -- Combat	
-	{{ -- Non Rotational Abilities
-		{{ -- Interrupts
+ProbablyEngine.rotation.register_custom(251, "[PvP] Twohanded made by Weischbier v1.0", 
+-----------------------------------------------------------------------------------------------------------------------------
+-- Combat ------------------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------
+{
+-----------------------------------------------------------------------------------------------------------------------------
+-- Pause -------------------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------	
+	{ "pause", "modifier.lshift"}, 								-- Pause when lshift is pressed
+-----------------------------------------------------------------------------------------------------------------------------
+-- Queued Spells ------------------------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------		
+	{{
+		{ "!50842", "@Synapse.checkQueue(50842)" },				-- Pestilence when queued
+		{ "!45524", "@Synapse.checkQueue(45524)" },				-- Chains of Ice when queued
+		{ "!73975", "@Synapse.checkQueue(73975)" },				-- Necrotic Strike when queued
+		{ "!61999", { 
+			"@Synapse.checkQueue(61999)",
+			"mouseover.exists",
+			"!mouseover.alive", }, "mouseover" },				-- Raise Ally when queued
+	}},
+-----------------------------------------------------------------------------------------------------------------------------
+-- Non Rotational Abilities ------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------	
+	{{
+-----------------------------------------------------------------------------------------------------------------------------
+-- Interrupts --------------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------
+		{{
 			{ "47528", "target.casting" },						-- Mind Freeze with a casting target
 			
 			{ "108194", {										-- Asphyxiate
 				"player.spell(108194).exists",					-- Asphyxiate when Asphyxiate exists in our Spellbook AND
-				"player.spell(47528).cooldown < 15",			-- Asphyxiate with Mind Freeze less than 15s cooldowntime remaining AND
-				"target.casting", }},							-- Asphyxiate with a casting target
-			
+				"player.spell(47528).cooldown < 14", }},		-- Asphyxiate with Mind Freeze less than 14s cooldowntime remaining AND
+				
 			{ "47476", {										-- Strangulate
 				"player.spell(47476).exists",					-- Strangulate when Strangulate exists in our Spellbook AND
-				"player.spell(47528).cooldown < 15",			-- Strangulate with Mind Freeze less than 15s cooldowntime remaining AND
-				"target.casting", }},							-- Strangulate with a casting target
-		}, "modifier.interrupt" }, 								-- Interrupts with Interrupt modifier enabled
-	
-		{{ -- Items			
-			{ "#5512", "player.health < 20", },					-- Healthstone with less than 20% health AND
+				"player.spell(47528).cooldown < 14", }},		-- Strangulate with Mind Freeze less than 14s cooldowntime remaining AND
+							
+			{ "47476", {										-- Strangulate
+				"player.spell(47476).exists",					-- Strangulate when Strangulate exists in our Spellbook AND
+				"target.range > 5",	}},							-- Strangulate when target is not in Mind Freeze range AND
+								
+			{ "108194", {										-- Asphyxiate
+				"player.spell(108194).exists",					-- Asphyxiate when Asphyxiate exists in our Spellbook AND
+				"target.range > 5", }},							-- Asphyxiate when target is not in Mind Freeze range AND		
+		}, { 
+			"@Synapse.IsKickableSpell()",						-- Interrupts check custom function
+			"modifier.interrupt" }}, 							-- Interrupts with Interrupt modifier enabled
+-----------------------------------------------------------------------------------------------------------------------------
+-- Items -------------------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------	
+		{{	
+			{ "#5512", {										-- Healthstone
+				"@Synapse.Healthstone()",						-- Healthstone with custom function AND
+				"player.health < 20" }},						-- Healthstone with less than 20% health
 	
 			{ "#89640", { 										-- Life Spirit
+				"@Synapse.LifeSpirit()",						-- Life Spirit with custom function AND
 				"player.health < 40",							-- Life Spirit with less than 40% health AND
 				"!player.buff(130649)" }},						-- Life Spirit with no Life Spirit Buff
 		}}, -- End of Items
-		
-		{{ -- Defensive Cooldowns
+-----------------------------------------------------------------------------------------------------------------------------
+-- Defensive Cooldowns ------------------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------				
+		{{
 			{ "59545", {										-- Gift of the Naaru (Dreanai racial)
 				"player.health < 40",							-- Gift of the Naaru when player has les than 40% health
 				"player.spell(59545).exists" }},				-- Gift of the Naaru when Death Siphon exists in our Spellbook
@@ -63,29 +103,15 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 				"player.health > 90",							-- Cancel Conversion with at least 90% health AND
 				"player.buff(119975)" }},						-- Cancel Conversion with Conversion Buff applied
 		}}, -- End of Defenseive Cooldowns
-			
-		--[[{{ -- Dark Simulacrum Usage on Focus
-			{ "77606", "focus.casting(144214)" , "focus" },		-- Dark Simulacrum when Focus is casting Froststorm Bolt (Wavebinder Kardris)
-			{ "77606", "focus.casting(143432)" , "focus" },		-- Dark Simulacrum when Focus is casting Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
-			{ "77606", "focus.casting(145790)" , "focus" },		-- Dark Simulacrum when Focus is casting Residue (Spoils of Pandaria; Zar'thik Amber Priest)
-			{ "77606", "focus.casting(145812)" , "focus" },		-- Dark Simulacrum when Focus is casting Rage of the Empress (Spoils of Pandaria; Set'thik Wind Wielder)
-			{ "77606", "focus.casting(144584)" , "focus" },		-- Dark Simulacrum when Focus is casting Chain Lighning (Garrosh; Farseer Wolf Rider)
-		}, { "focus.exists",
-			 "focus.alive",
-			 "focus.casting" }},
-		
-		{{ -- Use mirrored Spells
-			{ "144214", "player.spell(144214).exists" , "target" },	-- Froststorm Bolt when spell exists on our target
-			{ "143432", "player.spell(143432).exists" , "target" },	-- Arcane Shock when spell exists on our target
-			{ "145790", "player.spell(145790).exists" , "player" },	-- Residue when spell exists on player (150.000,00 Healing Buff)
-			{ "145812", "player.spell(145812).exists" , "player" },	-- Rage of the Empress when spell exists on player (5% more damage)
-			{ "144584", "player.spell(144584).exists" , "target" },	-- Chain Lightning when spell exists on our target
-		}},--]]
-			
-		{{ -- Offensive Cooldowns; Let's line them up properly, it doesn't make sense to cast them async.			
+-----------------------------------------------------------------------------------------------------------------------------
+-- Offensive Cooldowns ------------------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------						
+		{{ -- Let's line them up properly, it doesn't make sense to cast them async.			
 			{ "51271" },										-- Pillar of Frost		
 			
-			{ "#gloves", "player.buff(51271)" },				-- Synapse Springs with Pillar of Frost Buff applied	
+			{ "#gloves", {										-- Synapse Springs
+				"@Synapse.SynapseSprings()",					-- Synapse Springs with custom function
+				"player.buff(51271)" }},						-- Synapse Springs with Pillar of Frost Buff applied	
 			
 			{ "46584", {										-- Raise Dead
 				"modifier.cooldowns",							-- Raise Dead with Cooldowns modifier enabled AND
@@ -112,13 +138,15 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 				"player.buff(51271)", }},						-- Rocket Barrage when player has Buff Pillar of Frost 
 				
 		}, "target.range <= 13" },								-- Offensive Cooldowns with our target at least 13f close to us
-
-		{{ -- Misc Talents; Tier 6, Pestilence
+-----------------------------------------------------------------------------------------------------------------------------
+-- Misc Talents; Blood Tap, Tier 6, Pestilence ------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------
+		{{
 			{ "69070", {										-- Rocket Jump (Gobin racial)
 				"target.distance > 15",							-- Rocket Jump when our target is more than 15f away from player AND
 				"player.spell(69070).exists" }},				-- Rocket Jump exists in our Spellbook
 				
-			{ "68992", {										-- Dark Flight (Worhen racial)
+			{ "68992", {										-- Dark Flight (Worgen racial)
 				"target.distance > 15",							-- Dark Flight when our target is more than 15f away from player AND
 				"player.spell(68992).exists" }},				-- Dark Flight when our target is more than 15f away from player AND
 				
@@ -135,22 +163,16 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 	
 			{ "49576", {										-- Death Grip
 				"modifier.lcontrol",							-- Death Grip with Left Control (STRG) pressed down AND
-				"target.range < 25" }},							-- Death Grip when our target is less than 25f in range
+				"target.range < 30" }},							-- Death Grip when our target is less than 25f in range
 		}},
 		
 	}, { "target.exists",
 		 "target.alive",
 		 "player.alive" }}, -- End of Non Rotational Abilities
-		
-	{{ -- Singletarget Rotation
-		{{														 -- Plague Leech
-			{ "123693", "target.debuff(55095).duration < 1" },	 -- Plague Leech when Frost Fever has less than 1s remaining
-			{ "123693", "target.debuff(55078).duration < 1" },	 -- Plague Leech when Blood Plague has less than 1s remaining
-		}, { "player.spell(123693).exists",						 -- Plague Leech does exist in our Spellbook AND
-			 "player.runes(Unholy).count = 0",					 -- Plague Leech when we have no Unholy Runes AND
-			 "player.runes(Frost).count = 0",					 -- Plague Leech when we have no Frost Runes AND
-			 "player.buff(114851).count < 5" }},				 -- Plague Leech when we have less than 5 Blood Charge stacks
-			
+-----------------------------------------------------------------------------------------------------------------------------
+-- Singletarget Rotation ---------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------			
+	{{			
 		{ "77575", "!target.debuff(55095)" },					 -- Outbreak with no Frost Fever applied OR
 		{ "77575", "!target.debuff(55078)" },					 -- Outbreak with no Blood Plague applied
 		
@@ -177,13 +199,6 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 		{ "49184", "player.buff(59052)" },						 -- Howling Blast with a Rime Proc
 	
 		{ "49020", "player.buff(51124)" },						 -- Obliterate with Killing Machine Proc
-		
-		{{														 -- Blood Tap
-			{ "45529", "player.buff(51124)" },					 -- Blood Tap when we have a Killing Machine Proc
-			{ "45529", "player.runicpower > 76" },				 -- Blood Tap when we have more than 76 Runicpower
-		}, { "player.runes.depleted",							 -- Blood Tap with depleted runes 
-			 "player.buff(114851).count >= 5",					 -- Blood Tap with at least 5 stacks of Blood Charge
-			 "player.spell(45529).exists" }},					 -- Blood Tap when Blood Tap exists in our Spellbook
 	
 		{ "49143", "player.runicpower > 76" },					 -- Frost Strike with higher than 76 Runicpower 
 		
@@ -191,40 +206,18 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 		{ "49020", "player.runes(frost) = 2" },					 -- Obliterate with 2 Frost Runes OR
 		{ "49020", "player.runes(unholy) = 2" },				 -- Obliterate with 2 Unholy Runes
 		
-		{{														 -- Plague Leech
-			{ "123693", "target.debuff(55095).duration < 3" },	 -- Plague Leech when Frost Fever has less than 3s remaining
-			{ "123693", "target.debuff(55078).duration < 3" },	 -- Plague Leech when Blood Plague has less than 3s remaining
-		}, { "player.spell(123693).exists",						 -- Plague Leech does exist in our Spellbook AND
-			 "player.runes(Unholy).count = 0",					 -- Plague Leech when we have no Unholy Runes AND
-			 "player.runes(Frost).count = 0",					 -- Plague Leech when we have no Frost Runes AND
-			 "player.buff(114851).count < 5" }},				 -- Plague Leech when we have less than 5 Blood Charge stacks
-			 
-		{ "77575", "target.debuff(55095).duration < 3" },		 -- Outbreak when Frost Fever has less than 3s remaining
-		{ "77575", "target.debuff(55078).duration < 3" },		 -- Outbreak when Blood Plague has less than 3s remaining
-		
-		{{														 -- Unholy Blight
-			{ "115989", "target.debuff(55095).duration < 3" },	 -- UnholyBlight when Frost Fever has less than 3s remaining
-			{ "115989", "target.debuff(55078).duration < 3" },	 -- UnholyBlight when Blood Plague has less than 3s remaining
-		}, "player.spell(115989).exists" },				 	 	 -- UnholyBlight when Unholy Blight exists in our Spellbook
-		
 		{ "49143", "player.buff(114851).count <= 10" },			 -- Frost Strike with less or equal than 10 stacks of Blood Charge
 		
 		{ "57330", "player.runicpower < 20" },					 -- Horn of Winter when we have less than 20 Runicpower
 		
 		{ "49020" },											 -- Obliterate
-		
-		{ "45529", {											 -- Blood Tap
-			"player.runicpower >= 20",				 			 -- Blood Tap when we have more than 76 Runicpower
-			"player.runes.depleted",							 -- Blood Tap with depleted runes 
-			"player.buff(114851).count > 10",					 -- Blood Tap with at least 10 stacks of Blood Charge
-			"player.spell(45529).exists" }},					 -- Blood Tap when Blood Tap exists in our Spellbook
 			
 		{ "49143" },											 -- Frost Strike
 			
 		{ "123693", {											 -- Plague Leech
 			"player.spell(123693).exists",						 -- Plague Leech does exist in our Spellbook AND
-			"target.debuff(55095)",								 -- Plague Leech when our target has Frost Fever AND
-			"target.debuff(55078)",								 -- Plague Leech when our target has Blood Plague AND
+			"target.debuff(55095).duration >= 1",				 -- Plague Leech when our target has Frost Fever AND
+			"target.debuff(55078).duration >= 1",				 -- Plague Leech when our target has Blood Plague AND
 			"player.runes(Unholy).count = 0",					 -- Plague Leech when we have no Unholy Runes AND
 			"player.runes(Frost).count = 0",					 -- Plague Leech when we have no Frost Runes AND
 			"player.buff(114851).count < 5", }},				 -- Plague Leech when we have less than 5 Blood Charge stacks
@@ -237,11 +230,15 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 			"player.runes(unholy).count = 0" }}					 -- Empower Rune Weapon when we have no Unholy Runes AND
 			
 	}, { "!modifier.multitarget",
+		 "!@Synapse.IsTargetImmune()",
 		 "target.exists",
 		 "target.alive",
 		 "player.alive" }}, -- End of Singletarget Rotation
 },
-{ -- Out of Combat
+-----------------------------------------------------------------------------------------------------------------------------
+-- Out of Combat ------------------------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------
+{
 	{{ -- Misc Stuff
 		{ "48266" , "!player.buff(48266)" },	-- Frost Presence when we don't have Frost Presence active
 		
@@ -249,4 +246,24 @@ ProbablyEngine.rotation.register_custom(251, "[Pvp] Twohanded made by Weischbier
 			"target.exists", 					-- Horn of Winter when we have a target AND
 			"target.alive" }},					-- Horn of Winter when our target is alive
 	}, "player.alive" }, -- Player must be alive to run this. I don't know, if it's nessecary but better safe than sorry.
-})
+},
+-----------------------------------------------------------------------------------------------------------------------------
+-- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
+-----------------------------------------------------------------------------------------------------------------------------
+function()
+ProbablyEngine.toggle.create(
+    'def',
+    'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
+    'Defensive CDs Toggle',
+	'Enable or Disable usage of defensive cooldowns')
+ProbablyEngine.toggle.create(
+    'howling',
+    'Interface\\Icons\\spell_frost_arcticwinds.png‎',
+    'Toggle Howling Blast',
+	'Enable or Disable Howling Blast to avoid cleave')
+ProbablyEngine.toggle.create(
+    'dnd',
+    'Interface\\Icons\\spell_shadow_deathanddecay.png‎',
+    'Toggle Death and Decay',
+	'Enable or Disable Death and Decay to avoid cleave')
+end)
