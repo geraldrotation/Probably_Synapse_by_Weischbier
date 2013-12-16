@@ -1,4 +1,7 @@
-ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbier v1.1",
+-- ProbablyEngine Rotation Packager
+-- Custom Blood Death Knight Rotation
+-- Created on Dec 16th 2013 12:07 pm
+ProbablyEngine.rotation.register_custom(250, "[PvE] Raid Tanking made by Weischbier v1.0", {
 -----------------------------------------------------------------------------------------------------------------------------
 -- Combat ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
@@ -16,8 +19,8 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 		{ "!73975", "@Synapse.checkQueue(73975)" },				-- Necrotic Strike when queued
 		{ "!61999", { 
 			"@Synapse.checkQueue(61999)",
-			"mouseover.exists",
-			"!mouseover.alive", }, "mouseover" },				-- Raise Ally when queued
+			"target.exists",
+			"!target.alive", }, "target" },						-- Raise Ally when queued
 	}},
 -----------------------------------------------------------------------------------------------------------------------------
 -- Non Rotational Abilities ------------------------------------------------------------------------------------------------- 
@@ -74,19 +77,19 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 		{{
 			{ "59545", {										-- Gift of the Naaru (Dreanai racial)
 				"player.health < 40",							-- Gift of the Naaru when player has les than 40% health
-				"player.spell(59545).exists" }},				-- Gift of the Naaru when Death Siphon exists in our Spellbook
+				"player.spell(59545).exists" }, "player"},		-- Gift of the Naaru when Death Siphon exists in our Spellbook
 				
 			{ "51052", { 										-- Anti-Magic Zone	
 				"modifier.lalt",								-- Anti-Magic Zone with Left Alt pressed down			
 				"player.spell(51052).exists" }, "ground" }, 	-- Anti-Magic Zone when Anti-Magic Zone exists in our Spellbook
 			
-			{ "47541", {										-- Death Siphon
+			{ "108196", {										-- Death Siphon
 				"player.health < 40",							-- Death Siphon when player has les than 40% health
-				"player.spell(47541).exists" }},				-- Death Siphon when Death Siphon exists in our Spellbook
+				"player.spell(108196).exists" }},				-- Death Siphon when Death Siphon exists in our Spellbook
 			
 			{ "47541", {										-- Death Coil
 				"player.buff(49039)",							-- Death Coil when player has Lichborne acive AND
-				"player.health < 90" }},						-- Death Coil when player has less than 90% health
+				"player.health < 90" }, "player" },				-- Death Coil when player has less than 90% health
 			
 			{ "49039", {										-- Lichborne
 				"!player.buff(49039)",							-- Lichborne when we don't have Lichborne active AND
@@ -101,7 +104,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 				"player.spell(119975).exists",					-- Conversion when Conversion exists in our Spellbook AND
 				"player.runicpower >= 20",						-- Conversion with more or equal then 20 Runicpower AND
 				"player.health < 20",							-- Conversion with less than 20% health AND
-				"!player.buff(119975)" }},						-- Conversion with no Conversion Buff applied
+				"!player.buff(119975)" }, "player" },			-- Conversion with no Conversion Buff applied
 		
 			{ "!/cancelaura Conversion", {						-- Cancel Conversion EN Version
 				"player.health > 90",							-- Cancel Conversion with at least 90% health AND
@@ -110,7 +113,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 			{ "!/cancelaura Umwandlung", {						-- Cancel Conversion DE Version
 				"player.health > 90",							-- Cancel Conversion with at least 90% health AND
 				"player.buff(119975)" }},						-- Cancel Conversion with Conversion Buff applied
-		}}, -- End of Defenseive Cooldowns
+		}, "toggle.def" }, -- End of Defenseive Cooldowns
 -----------------------------------------------------------------------------------------------------------------------------
 -- Dark Simulacrum ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------			
@@ -346,7 +349,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 -----------------------------------------------------------------------------------------------------------------------------
 {
 	{{ -- Misc Stuff
-		{ "48266" , "!player.buff(48266)" },	-- Frost Presence when we don't have Frost Presence active
+		{ "48263" , "!player.buff(48263)" },	-- Blood Presence when we don't have Blood Presence active
 		
 		{ "57330", { 							-- Horn of Winter
 			"target.exists", 					-- Horn of Winter when we have a target AND
@@ -363,6 +366,11 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Dual Wield made by Weischbie
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
+--[[ProbablyEngine.toggle.create(
+    'audible',
+    'Interface\\Icons\\inv_misc_bell_01.png‎',
+    'Audible cues Toggle',
+	'Enable or Disable usage of ausdible cues,\n when changing a button state (cooldowns on/off)')]]
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',

@@ -5,103 +5,6 @@ Synapse.items = { }
 Synapse.flagged = GetTime()
 Synapse.unflagged = GetTime()
 
-Synapse.PvP_AMSPreventList = {       
-    5782, 	-- fear
-	8122, 	-- psychic scream
-	5484, 	-- Howl of terror
-	5246, 	-- Intimidating shout
-	64044, 	-- Psychic horror
-	111397, -- Blood fear
-	113792, -- Pcychic terror
-	16508, 	-- Intimidating roar
-	51514, 	-- Hex
-	118, 	-- Polymorph
-	61305, 	-- Polymorph: Black Cat
-	28272, 	-- Polymorph: Pig
-	61721, 	-- Polymorph: Rabbit
-	61780, 	-- Polymorph: Turkey
-	28271, 	-- Polymorph: Turtle
-} 
-
-Synapse.DMGImmuneList = {    
-    33786, 	-- Cyclone
-    113506, -- Cyclone
-    45438, 	-- Ice Block
-    110700, -- Divine Shield (Paladin)
-    110696, -- Ice Block (Mage)
-    19263, 	-- Deterrence
-    45438, 	-- Ice Block
-    122464, -- Dematerialize
-    --122470, -- touch of karma
-    642, 	-- Divine Shield
-} 
-
-Synapse.DSIMCopySpellList = {  
-    49016, 	-- Unholy Frenzy
-    13750, 	-- Adrenaline Rush
-    79140, 	-- Vendetta
-    34692, 	-- Beast Within
-    31884, 	-- Avenging Wrath
-    107574, -- Avatar
-    12292, 	-- Bloodbath
-    1719, 	-- Recklessness
-    114049, -- Ascendance
-	-- Some SoO spells
-	144214, -- Froststorm Bolt (Wavebinder Kardris)
-	143432, -- Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
-	145790, -- Residue (Spoils of Pandaria; Zar'thik Amber Priest)
-	145812, -- Rage of the Empress (Spoils of Pandaria; Set'thik Wind Wielder)
-	144584, -- Chain Lighning (Garrosh; Farseer Wolf Rider)
-} 
-
-Synapse.KickSpellList = {      
-    2637,  	-- Hibernate
-    33786, 	-- Cyclone
-    605,  	-- Dominate Mind
-    51505, 	-- Lava Burst
-    51514, 	-- Hex
-    5782, 	-- Fear
-    48181, 	-- Haunt
-    30108,
-    33786, 	-- Cyclone		(cast)\
-    28272, 	-- Pig Poly		(cast)
-    118, 	-- Sheep Poly		(cast)
-    61305, 	-- Cat Poly		(cast)
-    61721, 	-- Rabbit Poly		(cast)
-    61780, 	-- Turkey Poly		(cast)
-    28271, 	-- Turtle Poly		(cast)
-    51514, 	-- Hex			(cast)
-    51505, 	-- Lava Burst		(cast)
-    339, 	-- Entangling Roots	(cast)
-    30451, 	-- Arcane Blast		(cast)
-    605, 	-- Dominate Mind		(cast)
-    20066, 	-- Repentance		(cast)
-    116858, -- Chaos Bolt		(cast)
-    113092, -- Frost Bomb		(cast)
-    8092, 	-- Mind Blast		(cast)
-    11366, 	-- Pyroblast		(cast)
-    48181, 	-- Haunt			(cast)
-    102051, -- Frost Jaw		(cast)
-    73920, 	-- Healing Rain		(cast)
-    51505, 	-- Lava Burst		(cast)
-    32375, 	-- Mass Dispel		(cast)
-    2006, 	-- Resurrection		(cast)
-    7328, 	-- Redemption		(cast)
-    2008, 	-- Ancestral Spirit	(cast)
-    50769, 	-- Revive		(cast)
-    2812, 	-- Denounce		(cast)
-    10326, 	-- Turn Evil		(cast)
-    82326, 	-- Divine Light		(cast)
-    82012, 	-- Repentance		(cast)
-    115310, -- Revival		(cast)
-    44614, 	-- Frostfire Bolt	(cast)
-    1513, 	-- Scare Beast		(cast)
-    982, 	-- Revive Pet		(cast)
-    111771, -- Demonic Gateway			(cast)
-    124465, -- Vampiric Touch			(cast)
-    32375, 	-- Mass Dispel				(cast)
-} 
-
 -- Commands -- bug thanks to chumii
 -----------------------------------------------------------------------------------------------------------------------------
 -- Notify Frame -- (c)xrn overlay for pqr -----------------------------------------------------------------------------------
@@ -151,19 +54,77 @@ Synapse.KickSpellList = {
       self.time = GetTime() 
       self:Show() 
     end
+
+-----------------------------------------------------------------------------------------------------------------------------
+-- Audible ------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+function Synapse.Audible(sound)
+  local location = "Interface\\AddOns\\Probably_Synapse_by_Weischbier\\sounds\\" .. sound .. ".mp3"
+  if ProbablyEngine.toggle.states.audiblecues then
+	PlaySoundFile(location, "Master")
+  end
+end
+	
+-----------------------------------------------------------------------------------------------------------------------------
+-- Create Help -------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+function Synapse.createHelpText( ... )
+  print("|cFF0A94FFChat commands:\n|cFFF8EFFB- /syn help -- for a list of available commands\n|cFFF8EFFB- /syn synapse -- installs all the required macros")
+  print("|cFF0A94FFQueue spells:\n|cFFF8EFFB- Chains of Ice\n|cFFF8EFFB- Necrotic Strike\n|cFFF8EFFB- Raise Ally at target\n|cFFF8EFFB-Pestilence")
+  print("|cFF0A94FFFor any further assistance please go to my thread!")
+end  
+	
+-----------------------------------------------------------------------------------------------------------------------------
+-- Create Macros ------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------
+function Synapse.createAllMacros( ... )
+  local usedslots = select(2,GetNumMacros())
+  if usedslots <= 5 then
+	DeleteMacro("SYN_DEF");
+	DeleteMacro("SYN_HOWLING");
+	DeleteMacro("SYN_DND");
+	DeleteMacro("SYN_KICK");
+	DeleteMacro("SYN_COOLDOWNS");
+	DeleteMacro("SYN_COI");
+	DeleteMacro("SYN_NECRO");
+	DeleteMacro("SYN_PEST");
+	DeleteMacro("SYN_RAISE"); 
+	CreateMacro("SYN_TOGGLE", "class_deathknight", "/syn toggle", 1);
+	CreateMacro("SYN_DEF", "spell_deathknight_iceboundfortitude", "/syn def", 1);
+	CreateMacro("SYN_HOWLING", "spell_frost_arcticwinds", "/syn howling", 1);
+	CreateMacro("SYN_DND", "spell_shadow_deathanddecay", "/syn dnd", 1);
+	CreateMacro("SYN_KICK", "spell_deathknight_mindfreeze", "/syn kick", 1);
+	CreateMacro("SYN_COOLDOWNS", "ability_deathknight_pillaroffrost", "/syn pillar", 1);
+	CreateMacro("SYN_COI", "spell_frost_chainsofice", "#showtooltip Chains of Ice\n/syn sChains", 1);
+	CreateMacro("SYN_NECRO", "inv_axe_96", "#showtooltip Necrotic Strike\n/syn sNecro", 1);
+	CreateMacro("SYN_PEST", "spell_shadow_plaguecloud", "#showtooltip Pestilence\n/syn sPest", 1);
+	CreateMacro("SYN_RAISE", "spell_shadow_deadofnight", "#showtooltip Raise Ally\n/syn sRaise", 1);		
+	itb:message("|cFF0A94FFCreated Macros");
+  else
+    print("|cFF0A94FFSynapse: |cFFB30000You don't have enough free Macroslots")
+  end
+end  
 -----------------------------------------------------------------------------------------------------------------------------
 -- Macros ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
 ProbablyEngine.command.register('syn', function(msg, box)
   local command, text = msg:match("^(%S*)%s*(.-)$")
+  if command == 'synapse' then
+	Synapse.createAllMacros()
+  end
+  if command == 'help' then
+	Synapse.createHelpText()
+  end
 -- Toggle -------------------------------------------------------------------------------------------------------------------
   if command == 'toggle' then
     if ProbablyEngine.toggle.states.MasterToggle then
         ProbablyEngine.buttons.toggle('MasterToggle')
         itb:message("|cFFB30000Synapse off")
+		Synapse.Audible("syn_off")
     else
         ProbablyEngine.buttons.toggle('MasterToggle')
         itb:message("|cFF0A94FFSynapse on")
+		Synapse.Audible("syn_on")
     end
   end
   
@@ -171,9 +132,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.interrupt then
       ProbablyEngine.buttons.toggle('interrupt')
       itb:message("|cFFB30000Interrupts off")
+	  Synapse.Audible("kick_off")
     else
       ProbablyEngine.buttons.toggle('interrupt')
       itb:message("|cFF00B34AInterrupts on")
+	  Synapse.Audible("kick_on")
     end
   end
 
@@ -181,9 +144,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.cooldowns then
       ProbablyEngine.buttons.toggle('cooldowns')
       itb:message("|cFFB30000Cooldowns off")
+	  Synapse.Audible("cool_off")
     else
       ProbablyEngine.buttons.toggle('cooldowns')
       itb:message("|cFF00B34ACooldowns on")
+	  Synapse.Audible("cool_on")
     end
   end
 
@@ -191,9 +156,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.multitarget then
       ProbablyEngine.buttons.toggle('multitarget')
       itb:message("|cFFB30000AoE off")
+	  Synapse.Audible("multi_off")
     else
       ProbablyEngine.buttons.toggle('multitarget')
       itb:message("|cFF00B34AAoE on")
+	  Synapse.Audible("multi_on")
     end
   end  
 
@@ -201,9 +168,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.def then
       ProbablyEngine.buttons.toggle('def')
       itb:message("|cFFB30000Defensive Cooldowns off")
+	  Synapse.Audible("def_off")
     else
       ProbablyEngine.buttons.toggle('def')
       itb:message("|cFF00B34ADefensive Cooldowns on")
+	  Synapse.Audible("def_on")
     end
   end
   
@@ -211,9 +180,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.howling then
       ProbablyEngine.buttons.toggle('howling')
       itb:message("|cFFB30000Howling Blast off")
+	  Synapse.Audible("howling_off")
     else
       ProbablyEngine.buttons.toggle('howling')
       itb:message("|cFF00B34AHowling Blast on")
+	  Synapse.Audible("howling_on")
     end
   end
 
@@ -221,9 +192,21 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.dnd then
       ProbablyEngine.buttons.toggle('dnd')
       itb:message("|cFFB30000Death and Decay off")
+	  Synapse.Audible("dnd_off")
     else
       ProbablyEngine.buttons.toggle('dnd')
       itb:message("|cFF00B34ADeath and Decay on")
+	  Synapse.Audible("dnd_on")
+    end
+  end
+  
+  if command == 'audible' then
+    if ProbablyEngine.toggle.states.audiblecues then
+      ProbablyEngine.buttons.toggle('audiblecues')
+      itb:message("|cFFB30000Audible cues off")
+    else
+      ProbablyEngine.buttons.toggle('audiblecues')
+      itb:message("|cFF00B34AAudible cues on")
     end
   end
   -- Spell Queue -- thank you merq for basic code -----------------------------------------------------------------------------
@@ -312,153 +295,81 @@ Synapse.setUnflagged = function (self, ...)
 end
 
 Synapse.eventHandler = function(self, ...)
-  local timestamp		 = select(1, ...)
-  local event		 	 = select(2, ...)
-  local hideCaster		 = select(3, ...)
-  local sourceGUID		 = select(4, ...)
-  local sourceName		 = select(5, ...)
-  local sourceFlags		 = select(6, ...)
-  local sourceFlags2	 = select(7, ...)
-  local destGUID		 = select(8, ...)
-  local destName		 = select(9, ...)
-  local destFlags		 = select(10, ...)
-  local destFlags2		 = select(11, ...)
-  --Prefix "Spell_" or "SPELL_PERIODIC_" or "RANGE_"
-  local spellID		 	 = select(12, ...)
-  local spellName		 = select(13, ...)
-  local spellSchool		 = select(14, ...)
-  --Suffix "_DAMAGE" or "_AURA_APPPLIED" or "_AURA_REMOVEDD" or "_AURA_REFRESH"
-  local amount		 	 = select(15, ...)
-  local overkill		 = select(16, ...)
-  local school		 	 = select(17, ...)
-  local resisted		 = select(18, ...)
-  local blocked		 	 = select(19, ...)
-  local absorbed		 = select(20, ...)
-  local critical		 = select(21, ...) -- 1 or nil
-  local glancing		 = select(22, ...) -- 1 or nil
-  local crushing		 = select(23, ...) -- 1 or nil
-  
-  --[[if destGUID == UnitGUID("player") then
-	if event = "SPELL_DAMAGE" or event = "SPELL_PERIODIC_DAMAGE" or event = "SWING_DAMAGE" or event = "RANGE_DAMAGE" then
-		local amountReducedByAMS = amount * 75/100 -- Let's get the amount of inc dmg when we would have AMS applied on us; 75% DMG reduction without Glyph.
-		local realamountAfterAMS = amount - amountReducedByAMS
-		local remainingHealthWithAMS = UnitHealth("player") - realamountAfterAMS -- Let's get the remaining health after amount of damage was applied.
-		-- Let's see if we can get some additional Runicpower with Anti-Magic Shell
-		if amount >= 100000 and school == 126 and UnitHealth("player") > (amount * 1.5) then -- 126 is Magic Spell School (I hope)
-			Synapse.CastSpell(48707, "player")	
-		-- If we're low on health and spell school is Magic then safe my fucking a$$
-		elseif amount > UnitHealth("player") and school == 126 and remainingHealthWithAMS > 0 then
-			Synapse.CastSpell(48707, "player")	
-		end
-		-- Let's see if we can survive damage with Icebound Fortitude
-		local amountReducedByIbF = amount * 20/100 -- Let's get the amount of inc dmg when we would have IbF applied to us; 20% DMG reduction.
-		local realamountAfterIbF = amount - amountReduced
-		local remainingHealthWithIbF = UnitHealth("player") - realamountIbF -- Let's get the remaining health after amount of damage was applied.
-		if amount > UnitHealth("player") and remainingHealthWithIbF > 0 then -- If the amount of incoming dmg is higher than our current health and IbF would safe us from dying then use it!
-			Synapse.CastSpell(48792, "player")
-		end
-	end
-  end--]]
-  
+  local event, timestamp, eventtype, hideCaster, 
+		srcGUID, srcName, srcFlags, srcRaidFlags,
+		destGUID, destName, destFlags, destRaidFlags,
+		param9, param10, param11, param12, param13, param14, 
+		param15, param16, param17, param18, param19, param20 = ...
+
+    if not eventtype or not eventtype or not destName then return end
+	local spellID, spellName, school = param9 or 0, param10 or "", param11 or 0
+	local spellschool = self:GetSpellSchool(school) or "N/A" -- string (Magic)
+	
   -- Item checks
-  if UnitName("player") == sourceName then
-    if event == "SPELL_CAST_SUCCESS" then
-      if spellID == 6262 then -- Healthstone
-        Synapse.items[6262] = { lastCast = GetTime() }
-      end
-      if spellID == 124199 then -- Landshark (itemId 77589)
+  if eventtype == "SPELL_CAST_SUCCESS" and srcName == UnitName("player") then
+	if spellID == 6262 then -- Healthstone (itemID 5512)
+		Synapse.items[6262] = { lastCast = GetTime() }
+    end
+    if spellID == 124199 then -- Landshark (itemID 77589)
         Synapse.items[77589] = { lastCast = GetTime(), exp = 0 }
-      end
-    end 
+    end
   end
-  -- PvE checks
-  if not UnitIsPVP("player") then	
-	if event == "SPELL_CAST_SUCCESS" then
-		-- IsCopySpell check
-		for i = 1, #Synapse.DSIMCopySpellList do
-			if spellID == Synapse.DSIMCopySpellList[spellID] then
-				Synapse.CastSpell(77606, "sourceName")
-				--_copySpell = true
-			end
-		end
-		
-		-- IsPreventSpell check  
-		if destGUID == UnitGUID("player") then		
-			for i = 1, #Synapse.PvP_AMSPreventList do
-				if spellID == Synapse.PvP_AMSPreventList[spellID] then
-					_preventSpell = true
-				end
-			end	
-		end
-	end	
-  end   
-  -- PvP checks
-  if UnitIsPVP("player") then
-	
-	if event == "SPELL_AURA_APPLIED" and destGUID == sourceGUID then
-		-- IsTargetImmune check
-		for i = 1, #Synapse.DMGImmuneList do
-			if spellID == Synapse.DMGImmuneList[spellID] then
-				_targetImmune = true
-			end
-		end
-	end	
-	
-	if event == "SPELL_CAST_SUCCESS" then
-		-- IsCopySpell check
-		for i = 1, #Synapse.DSIMCopySpellList do
-			if spellID == Synapse.DSIMCopySpellList[spellID] then
-				Synapse.CastSpell(77606, "sourceName")
-				--_copySpell = true
-			end
-		end
-	end
-  
-	if destGUID == UnitGUID("player") then
-		if event == "SPELL_CAST_SUCCESS" then
-		-- IsPreventSpell check  
-		for i = 1, #Synapse.PvP_AMSPreventList do
-			if spellID == Synapse.PvP_AMSPreventList[spellID] then
-				_preventSpell = true
-			end
-		end
-		
-		-- IsKickableSpell check
-		for i = 1, #Synapse.KickSpellList do
-			if spellID == Synapse.KickSpellList[spellID] then
-				_kickSpell = true
-			end
-		end		
-	  end
-	end	
-  end   
 end
 
-ProbablyEngine.listener.register("Synapse", "COMBAT_LOG_EVENT_UNFILTERED", Synapse.eventHandler)
+ProbablyEngine.listener.register("Synapse", "COMBAT_LOG_eventtype_UNFILTERED", Synapse.eventtypeHandler)
 ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.setFlagged)
 ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.setUnflagged)
 
--- PvP checks
-local _kickSpell = false
-local _targetImmune = false
-local _copySpell = false
-local _preventSpell = false
-local _incomingDamage = false
-
-function Synapse.IsKickableSpell()
-	if _kickSpell then return true else return false end
+-- Offhand has Weapon
+function Synapse.HasOffhand()
+	local hasWeapon = OffhandHasWeapon()
+	if hasWeapon == 1 then
+		--itb:message("|cFF0A94FFDual Wielding")
+		return true
+	else
+		--itb:message("|cFFB30000NOT Dual Wielding")
+		return false
+	end
 end
 
-function Synapse.IsTargetImmune()
-	if _targetImmune then return true else return false end
+-- Dot Damage
+function Synapse.DotDamage()
+if not DKStatsVar then
+	DotDmg 				  	= 0
+	DKStatsVar 				= true
+end
+if ActualDotDmg() > DotDmg then
+	DotDmg = ActualDotDmg()
+	return true
+end
 end
 
-function Synapse.IsCopySpell()
-	if _copySpell then return true else return false end
-end
-
-function Synapse.IsPreventSpell()
-	if _preventSpell then return true else return false end
+function ActualDotDmg()
+	local Spec 				= select(1,GetSpecializationInfo(GetSpecialization()))
+	local Mastery 			= GetMastery()
+	local CriticalChance	= GetCritChance()
+	local Power				= select(7,UnitDamage("player"))
+	local AttackPower		= select(1,UnitAttackPower("player")) + select(2,UnitAttackPower("player")) + select(3,UnitAttackPower("player"))
+	
+	local DotTicks, DotTicksSecond, DotTicksDamage, DotDuration, DotDamage, DotDPS
+	
+	--Blood Plague
+	local DotTicks = 10
+	local DotTicksSecond = 3
+	local DotTicksDamage = 172 + 0.138 * AttackPower
+	local DotDuration = DotTicks * DotTicksSecond
+	
+	if Spec == 252
+	then
+		DotDamage = (DotTicksDamage * DotTicks) * (1 + CriticalChance / 100) * (1 + (2.5 * Mastery) / 100) * Power
+		return DotDamage
+	end	
+	
+	if Spec == 250 or Spec == 251
+	then
+		DotDamage = (DotTicksDamage * DotTicks) * (1 + CriticalChance / 100) * Power
+		return DotDamage
+	end	
 end
 
 -- Potion of Mogu Power
@@ -490,7 +401,7 @@ function Synapse.SynapseSprings()
 	return false 
   end 
   local PoF = select(2,GetSpellCooldown(51271))
-  if PoF > 10 and PoF < 20 then
+  if PoF > 10 and PoF < 21 then
     return false
   end
   return true
@@ -524,3 +435,28 @@ function Synapse.Healthstone()
 end
 
 ProbablyEngine.library.register("Synapse", Synapse)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

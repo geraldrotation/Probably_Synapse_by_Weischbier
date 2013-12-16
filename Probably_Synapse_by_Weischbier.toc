@@ -1,9 +1,10 @@
 ## Interface: 50400
 ## Title: Probably: Synapse made by Weischbier
-## Notes: Custom Frost Death Knight Routine made by Weischbier
+## Notes: Custom Death Knight Routine made by Weischbier
 ## Dependencies: Probably
 
 Synapse_lib.lua
-PvE_DualWield.lua
-PvE_Twohanded.lua
-PvP_Twohanded.lua
+[PvE-Blood]_Raid_Tanking.lua
+[PvE-Blood]_Trash_Tanking.lua
+[PvE-Frost]_Frost.lua
+[PvE-Unholy]_Unholy.lua
