@@ -1,6 +1,8 @@
 -- thanks to root and chumii!
 local Synapse = { }
 
+Synapse.debugOn = false
+
 Synapse.items = { }
 Synapse.flagged = GetTime()
 Synapse.unflagged = GetTime()
@@ -61,7 +63,7 @@ Synapse.unflagged = GetTime()
 function Synapse.Audible(sound)
   local location = "Interface\\AddOns\\Probably_Synapse_by_Weischbier\\sounds\\" .. sound .. ".mp3"
   if ProbablyEngine.toggle.states.audiblecues then
-	PlaySoundFile(location, "Master")
+	PlaySoundFile(location, "SFX")
   end
 end
 	
@@ -79,7 +81,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 function Synapse.createAllMacros( ... )
   local usedslots = select(2,GetNumMacros())
-  if usedslots <= 5 then
+  if usedslots <= 12 then
 	DeleteMacro("SYN_DEF");
 	DeleteMacro("SYN_HOWLING");
 	DeleteMacro("SYN_DND");
@@ -94,7 +96,9 @@ function Synapse.createAllMacros( ... )
 	CreateMacro("SYN_HOWLING", "spell_frost_arcticwinds", "/syn howling", 1);
 	CreateMacro("SYN_DND", "spell_shadow_deathanddecay", "/syn dnd", 1);
 	CreateMacro("SYN_KICK", "spell_deathknight_mindfreeze", "/syn kick", 1);
-	CreateMacro("SYN_COOLDOWNS", "ability_deathknight_pillaroffrost", "/syn pillar", 1);
+	CreateMacro("SYN_FR_COOLDOWNS", "ability_deathknight_pillaroffrost", "/syn pillar", 1);
+	CreateMacro("SYN_UH_COOLDOWNS", "spell_shadow_unholyfrenzy", "/syn frenzy", 1);
+	CreateMacro("SYN_BL_COOLDOWNS", "inv_sword_07", "/syn dancing", 1);
 	CreateMacro("SYN_COI", "spell_frost_chainsofice", "#showtooltip Chains of Ice\n/syn sChains", 1);
 	CreateMacro("SYN_NECRO", "inv_axe_96", "#showtooltip Necrotic Strike\n/syn sNecro", 1);
 	CreateMacro("SYN_PEST", "spell_shadow_plaguecloud", "#showtooltip Pestilence\n/syn sPest", 1);
@@ -109,7 +113,7 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 ProbablyEngine.command.register('syn', function(msg, box)
   local command, text = msg:match("^(%S*)%s*(.-)$")
-  if command == 'synapse' then
+  if command == 'synapse' or command == 'install' or command == 'macros' then
 	Synapse.createAllMacros()
   end
   if command == 'help' then
@@ -140,7 +144,7 @@ ProbablyEngine.command.register('syn', function(msg, box)
     end
   end
 
-  if command == 'pillar' then
+  if command == 'pillar' or command == 'frenzy' or command == 'dancing' then
     if ProbablyEngine.toggle.states.cooldowns then
       ProbablyEngine.buttons.toggle('cooldowns')
       itb:message("|cFFB30000Cooldowns off")
@@ -265,7 +269,7 @@ function Synapse.CanCast(spellID, target)
 	if isKnown and isUsable and inRange and spellCooldown <= 0 then
 		return true
 	else
-		 return false
+		return false
 	end
 end
 
@@ -277,8 +281,8 @@ function Synapse.CastSpell(spellID, target)
 end
 
 function Synapse.t2d(target)
-  if ProbablyEngine.condition["deathin"](target) then
-    return ProbablyEngine.condition["deathin"](target)
+	if ProbablyEngine.condition["deathin"](target) then
+		return ProbablyEngine.condition["deathin"](target)
 	end
   return 600
 end
@@ -294,29 +298,47 @@ Synapse.setUnflagged = function (self, ...)
   end
 end
 
+Synapse.DarkSimulacrumList = {
+    144214, -- Froststorm Bolt (Wavebinder Kardris)
+    143432, -- Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
+	145790, -- Residue (Spoils of Pandaria; Zar'thik Amber Priest)
+	145812, -- Rage of the Empress (Spoils of Pandaria; Set'thik Wind Wielder)
+	144584  -- Chain Lighning (Garrosh; Farseer Wolf Rider)
+} 
+
 Synapse.eventHandler = function(self, ...)
-  local event, timestamp, eventtype, hideCaster, 
+		local event, timestamp, eventtype, hideCaster, 
 		srcGUID, srcName, srcFlags, srcRaidFlags,
 		destGUID, destName, destFlags, destRaidFlags,
 		param9, param10, param11, param12, param13, param14, 
 		param15, param16, param17, param18, param19, param20 = ...
 
-    if not eventtype or not eventtype or not destName then return end
-	local spellID, spellName, school = param9 or 0, param10 or "", param11 or 0
-	local spellschool = self:GetSpellSchool(school) or "N/A" -- string (Magic)
+		if not eventtype or not eventtype or not destName then return end
+		local spellID, spellName, school = param9 or 0, param10 or "", param11 or 0
+		local spellschool = self:GetSpellSchool(school) or "N/A" -- string (Magic)
 	
-  -- Item checks
-  if eventtype == "SPELL_CAST_SUCCESS" and srcName == UnitName("player") then
-	if spellID == 6262 then -- Healthstone (itemID 5512)
-		Synapse.items[6262] = { lastCast = GetTime() }
-    end
-    if spellID == 124199 then -- Landshark (itemID 77589)
-        Synapse.items[77589] = { lastCast = GetTime(), exp = 0 }
-    end
-  end
+		-- Item checks
+		if eventtype == "SPELL_CAST_SUCCESS" then
+			if srcName == UnitName("player") then
+				if spellID == 6262 then -- Healthstone (itemID 5512)
+					Synapse.items[6262] = { lastCast = GetTime() }
+				end
+				if spellID == 124199 then -- Landshark (itemID 77589)
+					Synapse.items[77589] = { lastCast = GetTime(), exp = 0 }
+				end
+			end			
+		end		
+		-- Dark Simulacrum Logic
+		if eventtype = "SPELL_CAST_START" and srcName ~= UnitName("player") then
+			local castID = select(8,UnitCastingInfo("sourceName")) -- castID of srcNames current cast
+			for i=1, #Synapse.DarkSimulacrumList do
+				if castID ==  Synapse.DarkSimulacrumList[i] then
+					Synapse.CastSpell(77606,"sourceName");
+				end
+			end
+		end
 end
-
-ProbablyEngine.listener.register("Synapse", "COMBAT_LOG_eventtype_UNFILTERED", Synapse.eventtypeHandler)
+ProbablyEngine.listener.register("Synapse", "COMBAT_LOG_EVENT_UNFILTERED", Synapse.eventtypeHandler)
 ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.setFlagged)
 ProbablyEngine.listener.register("Synapse", "PLAYER_REGEN_DISABLED", Synapse.setUnflagged)
 

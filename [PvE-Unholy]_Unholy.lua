@@ -112,7 +112,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 -----------------------------------------------------------------------------------------------------------------------------
 -- Dark Simulacrum ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------			
-		{{
+		--[[{{
 			{ "77606", "focus.casting(144214)" , "focus" },		-- Dark Simulacrum when Focus is casting Froststorm Bolt (Wavebinder Kardris)
 			{ "77606", "focus.casting(143432)" , "focus" },		-- Dark Simulacrum when Focus is casting Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
 			{ "77606", "focus.casting(145790)" , "focus" },		-- Dark Simulacrum when Focus is casting Residue (Spoils of Pandaria; Zar'thik Amber Priest)
@@ -120,7 +120,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 			{ "77606", "focus.casting(144584)" , "focus" },		-- Dark Simulacrum when Focus is casting Chain Lighning (Garrosh; Farseer Wolf Rider)
 		}, { "focus.exists",
 			 "focus.alive",
-			 "focus.casting", }},
+			 "focus.casting", }},]]
 -----------------------------------------------------------------------------------------------------------------------------
 -- Mirrored Spells ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------		
@@ -181,16 +181,16 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 				"player.spell(96268).exists",					-- Deaths Advance when Deaths Advance exists in our Spellbook
 				"!player.spell(68992).exists" }},				-- Deaths Advance when Dark Flight does not exist in our Spellbook
 			
-			{{
+			{{													-- Tier 6 Talents
 				{ "108199", "player.spell(108199).exists" },	-- Gorefiend's Graps when Gorfiend's Grasp exists in our Spellbook
 				{ "108200", "player.spell(108200).exists" },	-- Remorseless Winter when Remorseless Winter exists in our Spellbook
 				{ "108201", "player.spell(108201).exists" },	-- Desecrated Ground when Desecrated Ground exists in our Spellbook
 			}, "modifier.ralt" },								-- Tier 6 Talent with Right Alt modifier pressed down
 			
-			{ "50842", {										-- Pestilence; made it available at all time so you don't need to switch rotation styles always. Figured it would make more sense this way. lol
+			--[[{ "50842", {									-- Pestilence; made it available at all time so you don't need to switch rotation styles always. Figured it would make more sense this way. lol
 				"modifier.lcontrol",							-- Pestilence with Left Control (STRG) pressed down
 				"target.debuff(55078)",							-- Pestilence with Frost Fever applied
-				"target.debuff(55095)", }},						-- Pestilence with Blood Plague applied
+				"target.debuff(55095)", }},						-- Pestilence with Blood Plague applied]]
 		}},
 		
 	}, { "target.exists",
@@ -235,7 +235,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 			"player.runicpower >= 32",							-- Blood Tap with at least 32 Runicpower
 			"player.spell(45529).exists" }},					-- Blood Tap when Blood Tap exists in our Spellbook
 			
-		{{
+		{{														-- Unholy Blight
 			{ "115989", "target.debuff(55078).duration < 3" },	-- UnholyBlight with Frost Fever remaining less than 3s  
 			{ "115989", "target.debuff(55095).duration < 3" },	-- UnholyBlight with Blood Plague remaining less than 3s 
 		}, { "toggle.howling",									-- Unholy Blight with custom condition
@@ -306,7 +306,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 			"player.runes(Frost).count = 0",					-- Plague Leech when we have no Frost Runes  
 			"player.buff(114851).count < 5", }},				-- Plague Leech when we have less than 5 Blood Charge stacks
 			
-		{ "85948" }												-- Festering Strike
+		{ "85948" },											-- Festering Strike
 		
 		{ "57330" },					 						-- Horn of Winter
 		
@@ -334,7 +334,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 -----------------------------------------------------------------------------------------------------------------------------
 {
 	{{ -- Misc Stuff
-		{ "48266" , "!player.buff(48266)" },	-- Frost Presence when we don't have Frost Presence active
+		{ "48265" , "!player.buff(48265)" },	-- Unholy Presence when we don't have Unholy Presence active
 		
 		{ "57330", { 							-- Horn of Winter
 			"target.exists", 					-- Horn of Winter when we have a target  
@@ -351,11 +351,13 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
---[[ProbablyEngine.toggle.create(
+if @Synapse.debugON then
+ProbablyEngine.toggle.create(
     'audible',
     'Interface\\Icons\\inv_misc_bell_01.png‎',
     'Audible cues Toggle',
-	'Enable or Disable usage of ausdible cues,\n when changing a button state (cooldowns on/off)')]]
+	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
+end
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',

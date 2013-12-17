@@ -110,7 +110,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 -----------------------------------------------------------------------------------------------------------------------------
 -- Dark Simulacrum ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------			
-		{{
+		--[[{{
 			{ "77606", "focus.casting(144214)" , "focus" },		-- Dark Simulacrum when Focus is casting Froststorm Bolt (Wavebinder Kardris)
 			{ "77606", "focus.casting(143432)" , "focus" },		-- Dark Simulacrum when Focus is casting Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
 			{ "77606", "focus.casting(145790)" , "focus" },		-- Dark Simulacrum when Focus is casting Residue (Spoils of Pandaria; Zar'thik Amber Priest)
@@ -118,7 +118,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 			{ "77606", "focus.casting(144584)" , "focus" },		-- Dark Simulacrum when Focus is casting Chain Lighning (Garrosh; Farseer Wolf Rider)
 		}, { "focus.exists",
 			 "focus.alive",
-			 "focus.casting", }},
+			 "focus.casting", }},]]
 -----------------------------------------------------------------------------------------------------------------------------
 -- Mirrored Spells ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------		
@@ -275,7 +275,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 		{ "77575", "!target.debuff(55095)" },					 -- Outbreak with no Frost Fever applied OR
 		{ "77575", "!target.debuff(55078)" },					 -- Outbreak with no Blood Plague applied
 
-		{{
+		{{														 -- Unholy Blight
 			{ "115989", "target.debuff(55078).duration < 3" },	 -- UnholyBlight with Frost Fever remaining less than 3s OR
 			{ "115989", "target.debuff(55095).duration < 3" },	 -- UnholyBlight with Blood Plague remaining less than 3s  
 		}, { "toggle.howling",									 -- Unholy Blight with custom condition
@@ -310,7 +310,7 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 
 		{ "49184", "toggle.howling", },							 -- Howling Blast with custom condition
 		
-		{ "45477", "!toggle.howling", },							 -- Icy Touch with custom condition
+		{ "45477", "!toggle.howling", },						 -- Icy Touch with custom condition
 
 		{ "49143", "player.runicpower >= 40" },					 -- Frost Strike with more or equal than 76 Runicpower
 
@@ -484,11 +484,13 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
---[[ProbablyEngine.toggle.create(
+if @Synapse.debugON then
+ProbablyEngine.toggle.create(
     'audible',
     'Interface\\Icons\\inv_misc_bell_01.png‎',
     'Audible cues Toggle',
-	'Enable or Disable usage of ausdible cues,\n when changing a button state (cooldowns on/off)')]]
+	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
+end
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',

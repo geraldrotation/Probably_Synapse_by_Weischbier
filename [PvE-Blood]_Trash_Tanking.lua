@@ -1,7 +1,7 @@
 -- ProbablyEngine Rotation Packager
 -- Custom Blood Death Knight Rotation
 -- Created on Dec 16th 2013 12:07 pm
-ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weischbier v1.0", {
+ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Trash Tanking made by Weischbier v1.0", {
 -----------------------------------------------------------------------------------------------------------------------------
 -- Combat ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weisch
 -----------------------------------------------------------------------------------------------------------------------------
 -- Dark Simulacrum ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------			
-		{{
+		--[[{{
 			{ "77606", "focus.casting(144214)" , "focus" },		-- Dark Simulacrum when Focus is casting Froststorm Bolt (Wavebinder Kardris)
 			{ "77606", "focus.casting(143432)" , "focus" },		-- Dark Simulacrum when Focus is casting Arcane Shock (General Nazgrim; Kor'kron Arcweaver)
 			{ "77606", "focus.casting(145790)" , "focus" },		-- Dark Simulacrum when Focus is casting Residue (Spoils of Pandaria; Zar'thik Amber Priest)
@@ -125,7 +125,7 @@ ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weisch
 			{ "77606", "focus.casting(144584)" , "focus" },		-- Dark Simulacrum when Focus is casting Chain Lighning (Garrosh; Farseer Wolf Rider)
 		}, { "focus.exists",
 			 "focus.alive",
-			 "focus.casting", }},
+			 "focus.casting", }},]]
 -----------------------------------------------------------------------------------------------------------------------------
 -- Mirrored Spells ---------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------		
@@ -212,48 +212,7 @@ ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weisch
 -- Multitarget Rotation ----------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------	
 	{{ 
-		{{														 -- Unholy Blight
-			{ "115989", "!target.debuff(55078)" },	 			 -- UnholyBlight with no Frost Fever ticking OR
-			{ "115989", "!target.debuff(55095)" },	 			 -- UnholyBlight with no Blood Plague no AND
-		}, { "!toggle.howling",									 -- Unholy Blight with custom condition
-			 "player.spell(115989).exists" }},				 	 -- Unholy Blight when Unholy Blight exists in our Spellbook
-			
-		{ "77575", "!target.debuff(55095)" },					 -- Outbreak with no Frost Fever applied OR
-		{ "77575", "!target.debuff(55078)" },					 -- Outbreak with no Blood Plague applied
-
-		{ "45462", {											 -- Plague Strike
-			"!target.debuff(55078)",							 -- Plague Strike with no Blood Plague applied AND
-			"player.runes(unholy).count > 0", }},				 -- Plague Strike with at least 1 Unholy Rune
-			
-		{{
-			{ "49184", "player.runes(frost).count > 0" },		 -- Howling Blast with at least 1 Frost Rune OR
-			{ "49184", "player.buff(59052)" },					 -- Howling Blast with a Rime Proc AND
-		}, "!target.debuff(55095)" },							 -- Howling Blast with no Frost Fever applied
-	
-		{ "43265", {											 -- Death and Decay
-			"player.runes(unholy).count > 0",					 -- Death and Decay with at least 1 Unholy Rune
-			"toggle.dnd", }, "ground" }, 						 -- Death and Decay with custom condition
-	
-		{ "49184" },											 -- Howling Blast
-	
-		{ "49143" },											 -- Frost Strike
-	
-		{ "57330", "player.runicpower < 20" },					 -- Horn of Winter when we have less than 20 Runicpower
-	
-		{ "123693", {											 -- Plague Leech
-			"player.spell(123693).exists",						 -- Plague Leech does exist in our Spellbook AND
-			"target.debuff(55095).duration >= 1",				 -- Plague Leech when our target has Frost Fever AND
-			"target.debuff(55078).duration >= 1",				 -- Plague Leech when our target has Blood Plague AND
-			"player.runes(Unholy).count = 0",					 -- Plague Leech when we have no Unholy Runes AND
-			"player.runes(Frost).count = 0",					 -- Plague Leech when we have no Frost Runes AND
-			"player.buff(114851).count < 5", }},				 -- Plague Leech when we have less than 5 Blood Charge stacks
-	
-		{ "47568", { 											 -- Empower Rune Weapon
-			"modifier.cooldowns", 								 -- Empower Rune Weapon when Cooldowns are enabled AND
-			"player.runicpower < 76", 							 -- Empower Rune Weapon when we have less than 76 Runicpower AND
-			"player.runes(death).count = 0", 					 -- Empower Rune Weapon when we have no Death Runes AND
-			"player.runes(frost).count = 0", 					 -- Empower Rune Weapon when we have no Frost Runes AND
-			"player.runes(unholy).count = 0" }},				 -- Empower Rune Weapon when we have no Unholy Runes AND
+		
 	}, { "modifier.multitarget",
 		 "target.exists",
 		 "target.alive",
@@ -262,83 +221,7 @@ ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weisch
 -- Singletarget Rotation ---------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------		
 	{{
-		{ "49143", "player.runicpower > 88" },					 -- Frost Strike with higher than 88 Runicpower OR
-		{ "49143", "player.buff(51124)" },						 -- Frost Strike with Killing Machine Proc
 		
-		{{
-			{ "49184", "player.runes(frost).count > 1" },		 -- Howling Blast with 2 Frost Runes OR
-			{ "49184", "player.runes(death).count > 1" },		 -- Howling Blast with 2 Death Runes
-		}, "toggle.howling", },
-		
-		{{
-			{ "45477", "player.runes(frost).count > 1" },		 -- Icy Touch with 2 Frost Runes OR
-			{ "45477", "player.runes(death).count > 1" },		 -- Icy Touch with 2 Death Runes
-		}, "!toggle.howling", },
-		
-		{ "77575", "!target.debuff(55095)" },					 -- Outbreak with no Frost Fever applied OR
-		{ "77575", "!target.debuff(55078)" },					 -- Outbreak with no Blood Plague applied
-
-		{{
-			{ "115989", "target.debuff(55078).duration < 3" },	 -- UnholyBlight with Frost Fever remaining less than 3s OR
-			{ "115989", "target.debuff(55095).duration < 3" },	 -- UnholyBlight with Blood Plague remaining less than 3s AND
-		}, { "toggle.howling",									 -- Unholy Blight with custom condition
-			 "player.spell(77575).cooldown > 0",			 	 -- UnholyBlight with Outbreak on cooldown
-			 "player.spell(115989).exists" }},				 	 -- UnholyBlight when Unholy Blight exists in our Spellbook
-		
-		{{
-			{ "49184", "player.runes(frost).count > 0" },		 -- Howling Blast with at least 1 Frost Rune OR
-			{ "49184", "player.buff(59052)" },					 -- Howling Blast with a Rime Proc AND
-		}, { "toggle.howling",									 -- Howling Blast with custom condition
-			 "!target.debuff(55095)" }},						 -- Howling Blast with no Frost Fever applied
-			
-		{{
-			{ "45477", "player.runes(frost).count > 0" },		 -- Icy Touch with at least 1 Frost Rune OR
-			{ "45477", "player.buff(59052)" },					 -- Icy Touch with a Rime Proc AND
-		}, { "!toggle.howling",									 -- Icy Touch with custom condition
-			 "!target.debuff(55095)" }},						 -- Icy Touch with no Frost Fever applied
-
-		{ "45462", {											 -- Plague Strike
-			"!target.debuff(55078)",							 -- Plague Strike with no Blood Plague applied AND
-			"player.runes(unholy).count > 0", }},				 -- Plague Strike with at least 1 Unholy Rune
-
-		{ "49184", {											 -- Howling Blast
-			"toggle.howling",									 -- Howling Blast with custom condition
-			"player.buff(59052)" }},					 		 -- Howling Blast with a Rime Proc
-			
-		{ "45477", {											 -- Icy Touch
-			"!toggle.howling",									 -- Icy Touch with custom condition
-			"player.buff(59052)" }},					 		 -- Icy Touch with a Rime Proc
-
-		{ "49143", "player.runicpower > 76" },					 -- Frost Strike with more than 76 Runicpower
-
-		{ "49184", "toggle.howling", },							 -- Howling Blast with custom condition
-		
-		{ "45477", "!toggle.howling", },							 -- Icy Touch with custom condition
-
-		{ "49143", "player.runicpower >= 40" },					 -- Frost Strike with more or equal than 76 Runicpower
-
-		{ "57330", "player.runicpower < 20" },					 -- Horn of Winter when we have less than 20 Runicpower
-	
-		{ "123693", {											 -- Plague Leech
-			"player.spell(123693).exists",						 -- Plague Leech does exist in our Spellbook AND
-			"target.debuff(55095).duration >= 1",				 -- Plague Leech when our target has Frost Fever AND
-			"target.debuff(55078).duration >= 1",				 -- Plague Leech when our target has Blood Plague AND
-			"player.runes(Unholy).count = 0",					 -- Plague Leech when we have no Unholy Runes AND
-			"player.runes(Frost).count = 0",					 -- Plague Leech when we have no Frost Runes AND
-			"player.buff(114851).count < 5", }},				 -- Plague Leech when we have less than 5 Blood Charge stacks
-	
-		{ "47568", { 											 -- Empower Rune Weapon
-			"modifier.cooldowns", 								 -- Empower Rune Weapon when Cooldowns are enabled AND
-			"player.runicpower < 76", 							 -- Empower Rune Weapon when we have less than 76 Runicpower AND
-			"player.runes(death).count = 0", 					 -- Empower Rune Weapon when we have no Death Runes AND
-			"player.runes(frost).count = 0", 					 -- Empower Rune Weapon when we have no Frost Runes AND
-			"player.runes(unholy).count = 0" }},				 -- Empower Rune Weapon when we have no Unholy Runes AND
-
-		{ "43265", {											 -- Death and Decay
-			"player.runes(unholy).count > 0",					 -- Death and Decay with at least 1 Unholy Rune
-			"toggle.dnd", }, "ground" }, 						 -- Death and Decay with custom condition
-
-		{ "45462", "player.runes(unholy).count > 0" },			 -- Plague Strike with at least 1 Unholy Rune
 	}, { "!modifier.multitarget",
 		 "target.exists",
 		 "target.alive",
@@ -366,11 +249,13 @@ ProbablyEngine.rotation.register_custom(250, "[PvE] Trash Tanking made by Weisch
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
---[[ProbablyEngine.toggle.create(
+if @Synapse.debugON then
+ProbablyEngine.toggle.create(
     'audible',
     'Interface\\Icons\\inv_misc_bell_01.png‎',
     'Audible cues Toggle',
-	'Enable or Disable usage of ausdible cues,\n when changing a button state (cooldowns on/off)')]]
+	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
+end
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
