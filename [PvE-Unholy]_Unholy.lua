@@ -1,4 +1,4 @@
-ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1.0",
+ProbablyEngine.rotation.register_custom(252, "[PvE] Unholy made by Weischbier v1.0",
 -----------------------------------------------------------------------------------------------------------------------------
 -- Combat ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
@@ -351,23 +351,21 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Unholy made by Weischbier v1
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
-if @Synapse.debugON then
 ProbablyEngine.toggle.create(
     'audible',
     'Interface\\Icons\\inv_misc_bell_01.png‎',
     'Audible cues Toggle',
 	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
-end
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
     'Defensive CDs Toggle',
 	'Enable or Disable usage of defensive cooldowns')
-ProbablyEngine.toggle.create(
-    'howling',
-    'Interface\\Icons\\spell_frost_arcticwinds.png‎',
-    'Toggle Howling Blast',
-	'Enable or Disable Howling Blast to avoid cleave')
+-- ProbablyEngine.toggle.create(
+    -- 'howling',
+    -- 'Interface\\Icons\\spell_frost_arcticwinds.png‎',
+    -- 'Toggle Howling Blast',
+	-- 'Enable or Disable Howling Blast to avoid cleave')
 ProbablyEngine.toggle.create(
     'dnd',
     'Interface\\Icons\\spell_shadow_deathanddecay.png‎',

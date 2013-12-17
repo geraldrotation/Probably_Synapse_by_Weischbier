@@ -1,7 +1,7 @@
 -- thanks to root and chumii!
 local Synapse = { }
 
-Synapse.debugOn = false
+local lang = GetCVar("locale")
 
 Synapse.items = { }
 Synapse.flagged = GetTime()
@@ -56,24 +56,21 @@ Synapse.unflagged = GetTime()
       self.time = GetTime() 
       self:Show() 
     end
-
------------------------------------------------------------------------------------------------------------------------------
--- Audible ------------------------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------------------------------------
-function Synapse.Audible(sound)
-  local location = "Interface\\AddOns\\Probably_Synapse_by_Weischbier\\sounds\\" .. sound .. ".mp3"
-  if ProbablyEngine.toggle.states.audiblecues then
-	PlaySoundFile(location, "SFX")
-  end
-end
 	
 -----------------------------------------------------------------------------------------------------------------------------
 -- Create Help -------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------
 function Synapse.createHelpText( ... )
-  print("|cFF0A94FFChat commands:\n|cFFF8EFFB- /syn help -- for a list of available commands\n|cFFF8EFFB- /syn synapse -- installs all the required macros")
-  print("|cFF0A94FFQueue spells:\n|cFFF8EFFB- Chains of Ice\n|cFFF8EFFB- Necrotic Strike\n|cFFF8EFFB- Raise Ally at target\n|cFFF8EFFB-Pestilence")
-  print("|cFF0A94FFFor any further assistance please go to my thread!")
+  --print(lang .. " is the client language")
+  if lang ~= "deDE" then
+	print("|cFF0A94FFChat commands:\n|cFFF8EFFB- /syn help -- for a list of available commands\n|cFFF8EFFB- /syn synapse -- installs all the required macros")
+	print("|cFF0A94FFQueue spells:\n|cFFF8EFFB- /syn sChains -- Chains of Ice\n|cFFF8EFFB- /syn sNecro -- Necrotic Strike\n|cFFF8EFFB- /syn sRaise -- Raise Ally at target\n|cFFF8EFFB- /syn sPest --Pestilence")
+	print("|cFF0A94FFFor any further assistance please visit my thread!")
+  else
+	print("|cFF0A94FFChat commands:\n|cFFF8EFFB- /syn help -- für eine Liste verfügbarer Chat kommandos\n|cFFF8EFFB- /syn synapse -- um die benötigten Makros zu erstellen")
+	print("|cFF0A94FFQueue spells:\n|cFFF8EFFB- /syn sChains -- Eisketten\n|cFFF8EFFB- /syn sNecro -- Nekrotischer Stoß\n|cFFF8EFFB- /syn sRaise -- Verbündeten Erwecken\n|cFFF8EFFB- /syn sPest --Pestilenz")
+	print("|cFF0A94FFFür weitere Hilfe, besuche meinen Thread!")
+  end  
 end  
 	
 -----------------------------------------------------------------------------------------------------------------------------
@@ -81,17 +78,24 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 function Synapse.createAllMacros( ... )
   local usedslots = select(2,GetNumMacros())
-  if usedslots <= 12 then
+  if usedslots <= 13 then
+	DeleteMacro("SYN_TOGGLE");
+	DeleteMacro("SYN_AUDIBLE");
+	DeleteMacro("SYN_MULTI");
 	DeleteMacro("SYN_DEF");
 	DeleteMacro("SYN_HOWLING");
 	DeleteMacro("SYN_DND");
 	DeleteMacro("SYN_KICK");
-	DeleteMacro("SYN_COOLDOWNS");
+	DeleteMacro("SYN_FR_COOLDOWNS");
+	DeleteMacro("SYN_UH_COOLDOWNS");
+	DeleteMacro("SYN_BL_COOLDOWNS");
 	DeleteMacro("SYN_COI");
 	DeleteMacro("SYN_NECRO");
 	DeleteMacro("SYN_PEST");
-	DeleteMacro("SYN_RAISE"); 
-	CreateMacro("SYN_TOGGLE", "class_deathknight", "/syn toggle", 1);
+	DeleteMacro("SYN_RAISE"); 	
+	CreateMacro("SYN_AUDIBLE", "inv_misc_bell_01", "/syn audible", 1);	
+	CreateMacro("SYN_MULTI", "Ability_Druid_Starfall", "/syn aoe", 1);	
+	CreateMacro("SYN_TOGGLE", "inv_sword_04", "/syn toggle", 1);
 	CreateMacro("SYN_DEF", "spell_deathknight_iceboundfortitude", "/syn def", 1);
 	CreateMacro("SYN_HOWLING", "spell_frost_arcticwinds", "/syn howling", 1);
 	CreateMacro("SYN_DND", "spell_shadow_deathanddecay", "/syn dnd", 1);
@@ -99,10 +103,17 @@ function Synapse.createAllMacros( ... )
 	CreateMacro("SYN_FR_COOLDOWNS", "ability_deathknight_pillaroffrost", "/syn pillar", 1);
 	CreateMacro("SYN_UH_COOLDOWNS", "spell_shadow_unholyfrenzy", "/syn frenzy", 1);
 	CreateMacro("SYN_BL_COOLDOWNS", "inv_sword_07", "/syn dancing", 1);
-	CreateMacro("SYN_COI", "spell_frost_chainsofice", "#showtooltip Chains of Ice\n/syn sChains", 1);
-	CreateMacro("SYN_NECRO", "inv_axe_96", "#showtooltip Necrotic Strike\n/syn sNecro", 1);
-	CreateMacro("SYN_PEST", "spell_shadow_plaguecloud", "#showtooltip Pestilence\n/syn sPest", 1);
-	CreateMacro("SYN_RAISE", "spell_shadow_deadofnight", "#showtooltip Raise Ally\n/syn sRaise", 1);		
+	if lang ~= "deDE" then
+		CreateMacro("SYN_COI", "spell_frost_chainsofice", "#showtooltip Chains of Ice\n/syn sChains", 1);
+		CreateMacro("SYN_NECRO", "inv_axe_96", "#showtooltip Necrotic Strike\n/syn sNecro", 1);
+		CreateMacro("SYN_PEST", "spell_shadow_plaguecloud", "#showtooltip Pestilence\n/syn sPest", 1);
+		CreateMacro("SYN_RAISE", "spell_shadow_deadofnight", "#showtooltip Raise Ally\n/syn sRaise", 1);
+	else 
+		CreateMacro("SYN_COI", "spell_frost_chainsofice", "#showtooltip Eisketten\n/syn sChains", 1);
+		CreateMacro("SYN_NECRO", "inv_axe_96", "#showtooltip Nekrotischer Stoß\n/syn sNecro", 1);
+		CreateMacro("SYN_PEST", "spell_shadow_plaguecloud", "#showtooltip Pestilenz\n/syn sPest", 1);
+		CreateMacro("SYN_RAISE", "spell_shadow_deadofnight", "#showtooltip Verbündeten Erwecken\n/syn sRaise", 1);
+	end
 	itb:message("|cFF0A94FFCreated Macros");
   else
     print("|cFF0A94FFSynapse: |cFFB30000You don't have enough free Macroslots")
@@ -111,8 +122,10 @@ end
 -----------------------------------------------------------------------------------------------------------------------------
 -- Macros ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
+local en
 ProbablyEngine.command.register('syn', function(msg, box)
   local command, text = msg:match("^(%S*)%s*(.-)$")
+  local loc = "Interface\\AddOns\\Probably_Synapse_by_Weischbier\\sounds\\"
   if command == 'synapse' or command == 'install' or command == 'macros' then
 	Synapse.createAllMacros()
   end
@@ -124,23 +137,23 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.MasterToggle then
         ProbablyEngine.buttons.toggle('MasterToggle')
         itb:message("|cFFB30000Synapse off")
-		Synapse.Audible("syn_off")
+		if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "syn_off.mp3", "master") end
     else
         ProbablyEngine.buttons.toggle('MasterToggle')
         itb:message("|cFF0A94FFSynapse on")
-		Synapse.Audible("syn_on")
-    end
-  end
+		if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "syn_on.mp3", "master") end
+	end
+  end  
   
   if command == 'kick' then
     if ProbablyEngine.toggle.states.interrupt then
       ProbablyEngine.buttons.toggle('interrupt')
       itb:message("|cFFB30000Interrupts off")
-	  Synapse.Audible("kick_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "kick_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('interrupt')
-      itb:message("|cFF00B34AInterrupts on")
-	  Synapse.Audible("kick_on")
+      itb:message("|cFF00B34AInterrupts on")	  
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "kick_on.mp3", "master") end
     end
   end
 
@@ -148,11 +161,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.cooldowns then
       ProbablyEngine.buttons.toggle('cooldowns')
       itb:message("|cFFB30000Cooldowns off")
-	  Synapse.Audible("cool_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "cool_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('cooldowns')
       itb:message("|cFF00B34ACooldowns on")
-	  Synapse.Audible("cool_on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "cool_on.mp3", "master") end
     end
   end
 
@@ -160,11 +173,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.multitarget then
       ProbablyEngine.buttons.toggle('multitarget')
       itb:message("|cFFB30000AoE off")
-	  Synapse.Audible("multi_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "multi_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('multitarget')
       itb:message("|cFF00B34AAoE on")
-	  Synapse.Audible("multi_on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "multi_on.mp3", "master") end
     end
   end  
 
@@ -172,11 +185,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.def then
       ProbablyEngine.buttons.toggle('def')
       itb:message("|cFFB30000Defensive Cooldowns off")
-	  Synapse.Audible("def_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "def_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('def')
       itb:message("|cFF00B34ADefensive Cooldowns on")
-	  Synapse.Audible("def_on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "def_on.mp3", "master") end
     end
   end
   
@@ -184,11 +197,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.howling then
       ProbablyEngine.buttons.toggle('howling')
       itb:message("|cFFB30000Howling Blast off")
-	  Synapse.Audible("howling_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "howling_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('howling')
       itb:message("|cFF00B34AHowling Blast on")
-	  Synapse.Audible("howling_on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "howling_on.mp3", "master") end
     end
   end
 
@@ -196,11 +209,11 @@ ProbablyEngine.command.register('syn', function(msg, box)
     if ProbablyEngine.toggle.states.dnd then
       ProbablyEngine.buttons.toggle('dnd')
       itb:message("|cFFB30000Death and Decay off")
-	  Synapse.Audible("dnd_off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "dnd_off.mp3", "master") end
     else
       ProbablyEngine.buttons.toggle('dnd')
       itb:message("|cFF00B34ADeath and Decay on")
-	  Synapse.Audible("dnd_on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "dnd_on.mp3", "master") end
     end
   end
   
@@ -222,7 +235,7 @@ ProbablyEngine.command.register('syn', function(msg, box)
     itb:message("Necrotic Strike queued")
   elseif command == "sRaise" or command == 61999 then
     Synapse.queueSpell = 61999
-    itb:message("Raise Ally queued. Mouseover NOW!")
+    itb:message("Raise Ally queued. Target the noob!")
   elseif command == "sPest" or command == 50842 then
     Synapse.queueSpell = 50842
     itb:message("Pestilence queued")
@@ -329,7 +342,7 @@ Synapse.eventHandler = function(self, ...)
 			end			
 		end		
 		-- Dark Simulacrum Logic
-		if eventtype = "SPELL_CAST_START" and srcName ~= UnitName("player") then
+		if eventtype == "SPELL_CAST_START" and srcName ~= UnitName("player") then
 			local castID = select(8,UnitCastingInfo("sourceName")) -- castID of srcNames current cast
 			for i=1, #Synapse.DarkSimulacrumList do
 				if castID ==  Synapse.DarkSimulacrumList[i] then

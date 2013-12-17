@@ -484,13 +484,11 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
-if @Synapse.debugON then
-ProbablyEngine.toggle.create(
-    'audible',
-    'Interface\\Icons\\inv_misc_bell_01.png‎',
-    'Audible cues Toggle',
-	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
-end
+-- ProbablyEngine.toggle.create(
+    -- 'audible',
+    -- 'Interface\\Icons\\inv_misc_bell_01.png‎',
+    -- 'Audible cues Toggle',
+	-- 'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',

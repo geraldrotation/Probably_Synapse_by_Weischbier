@@ -1,7 +1,7 @@
 -- ProbablyEngine Rotation Packager
 -- Custom Blood Death Knight Rotation
 -- Created on Dec 16th 2013 12:07 pm
-ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made by Weischbier v1.0", {
+ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made by Weischbier v1.0",
 -----------------------------------------------------------------------------------------------------------------------------
 -- Combat ------------------------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------
@@ -249,26 +249,24 @@ ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
-if @Synapse.debugON then
 ProbablyEngine.toggle.create(
     'audible',
     'Interface\\Icons\\inv_misc_bell_01.png‎',
     'Audible cues Toggle',
 	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
-end
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
     'Defensive CDs Toggle',
 	'Enable or Disable usage of defensive cooldowns')
-ProbablyEngine.toggle.create(
-    'howling',
-    'Interface\\Icons\\spell_frost_arcticwinds.png‎',
-    'Toggle Howling Blast',
-	'Enable or Disable Howling Blast to avoid cleave')
-ProbablyEngine.toggle.create(
-    'dnd',
-    'Interface\\Icons\\spell_shadow_deathanddecay.png‎',
-    'Toggle Death and Decay',
-	'Enable or Disable Death and Decay to avoid cleave')
+-- ProbablyEngine.toggle.create(
+    -- 'howling',
+    -- 'Interface\\Icons\\spell_frost_arcticwinds.png‎',
+    -- 'Toggle Howling Blast',
+	-- 'Enable or Disable Howling Blast to avoid cleave')
+-- ProbablyEngine.toggle.create(
+    -- 'dnd',
+    -- 'Interface\\Icons\\spell_shadow_deathanddecay.png‎',
+    -- 'Toggle Death and Decay',
+	-- 'Enable or Disable Death and Decay to avoid cleave')
 end)
