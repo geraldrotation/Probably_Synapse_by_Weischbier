@@ -23,7 +23,7 @@ You HAVE TO make the following macros!
 - /syn macros or
 - /syn synapse
 to install all required macros for Synapse!
-Additionally you can type /syn help for more information.
+Additionally you can type /syn help for more information!
 
 Supported Talents:
 - 1. Plague Leech, Unholy Blight
