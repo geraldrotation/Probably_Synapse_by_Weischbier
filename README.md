@@ -21,7 +21,8 @@ Raise Dead and Empower Rune Weapon will only be used when you enable cooldowns.
 You HAVE TO make the following macros!
 - /syn install or
 - /syn macros or
-- /syn synapse
+- /syn synapse 
+
 to install all required macros for Synapse!
 Additionally you can type /syn help for more information!
 
