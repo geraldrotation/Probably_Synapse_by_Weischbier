@@ -19,16 +19,11 @@ Pillar of Frost and Synapse Springs will always be used as part of the rotation.
 Raise Dead and Empower Rune Weapon will only be used when you enable cooldowns.
 
 You HAVE TO make the following macros!
-- /syn toggle - Synapse on/off
-- /syn aoe - Aoe rotation on/off
-- /syn kick - Interrupts on/off
-- /syn pillar - Cooldowns on/off
-- /syn howling - Howling Blast on/off
-- /syn dnd - Death and Decay on/off
-- /syn sChains - Queue Chains of Ice
-- /syn sNecro - Queue Necrotic Strike
-- /syn sPest - Queue Pestilence
-- /syn sRaise - Queue Raise Ally at mouseover
+- /syn install or
+- /syn macros or
+- /syn synapse
+to install all required macros for Synapse!
+Additionally you can type /syn help for more information.
 
 Supported Talents:
 - 1. Plague Leech, Unholy Blight
