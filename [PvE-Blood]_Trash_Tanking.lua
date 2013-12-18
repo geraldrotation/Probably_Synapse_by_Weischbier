@@ -249,21 +249,21 @@ ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Trash Tanking mad
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
-ProbablyEngine.toggle.create(
-    'audible',
-    'Interface\\Icons\\inv_misc_bell_01.png‎',
-    'Audible cues Toggle',
-	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
+-- ProbablyEngine.toggle.create(
+    -- 'audible',
+    -- 'Interface\\Icons\\inv_misc_bell_01.png‎',
+    -- 'Audible cues Toggle',
+	-- 'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
     'Defensive CDs Toggle',
 	'Enable or Disable usage of defensive cooldowns')
--- ProbablyEngine.toggle.create(
-    -- 'howling',
-    -- 'Interface\\Icons\\spell_frost_arcticwinds.png‎',
-    -- 'Toggle Howling Blast',
-	-- 'Enable or Disable Howling Blast to avoid cleave')
+ProbablyEngine.toggle.create(
+    'taunt',
+    'Interface\\Icons\\spell_nature_shamanrage.png‎',
+    'SoO Auto Taunt Toggle',
+	'Enable or Disable Auto Taunt in SoO\nImmerseus 1 Stack\nNorushen 4 Stacks\nSha of Pride 1 Stack\nIron Juggernaut 3 Stacks\nDark Shamans 5 Stacks\nGeneral Nazgrim 3 Stacks\nMalkorok 13 Stacks\nBlackfuse 3 Stacks\nThok 3 Stacks\nGarrosh 3 Stacks\nSET 2ND TANK TO FOCUS')
 -- ProbablyEngine.toggle.create(
     -- 'dnd',
     -- 'Interface\\Icons\\spell_shadow_deathanddecay.png‎',

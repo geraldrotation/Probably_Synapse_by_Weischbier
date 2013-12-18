@@ -23,6 +23,22 @@ ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made
 			"!target.alive", }, "target" },						-- Raise Ally when queued
 	}},
 -----------------------------------------------------------------------------------------------------------------------------
+-- SoO Taunt Events --------------------------------------------------------------------------------------------------------- THX chumii
+-----------------------------------------------------------------------------------------------------------------------------
+	{ "56222", {"target.id(71543)", "!player.debuff(143436)", "focus.debuff(143436).count >= 1", "toggle.taunt"}}, 	-- Immerseus 1 Stack
+	{ "56222", {"target.id(72276)", "!player.debuff(146124)", "focus.debuff(146124).count >= 4", "toggle.taunt"}}, 	-- Norushen 4 Stacks
+	{ "56222", {"target.id(71734)", "!player.debuff(144358)", "focus.debuff(144358).count >= 1", "toggle.taunt"}}, 	-- Sha of Pride 1 Stack
+	{ "56222", {"target.id(71466)", "!player.debuff(144467)", "focus.debuff(144467).count >= 3", "toggle.taunt"}}, 	-- Iron Juggernaut 3 Stacks
+	{ "56222", {"target.id(71859)", "!player.debuff(144215)", "focus.debuff(144215).count >= 5", "toggle.taunt"}}, 	-- Dark Shamans 5 Stacks
+	{ "56222", {"target.id(71515)", "!player.debuff(143494)", "focus.debuff(143494).count >= 3", "toggle.taunt"}}, 	-- Nazgrim 3 Stacks
+	{ "56222", {"target.id(71454)", "!player.debuff(142990)", "focus.debuff(142990).count >= 13","toggle.taunt"}},  -- Malkorok 13 Stacks
+	{ "56222", {"target.id(71504)", "!player.debuff(143385)", "focus.debuff(143385).count >= 3", "toggle.taunt"}},	-- Blackfuse 3 Stacks !!!
+	{ "56222", {"target.id(71529)", "!player.debuff(143426)", "focus.debuff(143426).count >= 3", "toggle.taunt"}}, 	-- Thok 3 Stacks Fearsome Roar
+	{ "56222", {"target.id(71529)", "!player.debuff(143780)", "focus.debuff(143780).count >= 3", "toggle.taunt"}}, 	-- Thok 3 Stacks Acid Breath
+	{ "56222", {"target.id(71529)", "!player.debuff(143773)", "focus.debuff(143773).count >= 3", "toggle.taunt"}}, 	-- Thok 3 Stacks Freezing Breath
+	{ "56222", {"target.id(71865)", "!player.debuff(145183)", "focus.debuff(145183).count >= 3", "toggle.taunt"}}, 	-- Garrosh 3 Stacks Gripping Despair
+	{ "56222", {"target.id(71865)", "!player.debuff(145195)", "focus.debuff(145195).count >= 3", "toggle.taunt"}}, 	-- Garrosh 3 Stacks Empowered Gripping Despair
+-----------------------------------------------------------------------------------------------------------------------------
 -- Non Rotational Abilities ------------------------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------------------------------------------------	
 	{{
@@ -249,21 +265,21 @@ ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made
 -- Custom Toggle ------------------------------------------------------------------------------------------------------------ 
 -----------------------------------------------------------------------------------------------------------------------------
 function()
-ProbablyEngine.toggle.create(
-    'audible',
-    'Interface\\Icons\\inv_misc_bell_01.png‎',
-    'Audible cues Toggle',
-	'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
+-- ProbablyEngine.toggle.create(
+    -- 'audible',
+    -- 'Interface\\Icons\\inv_misc_bell_01.png‎',
+    -- 'Audible cues Toggle',
+	-- 'Enable or Disable usage of audible cues,\n when changing a button state (cooldowns on/off)')
 ProbablyEngine.toggle.create(
     'def',
     'Interface\\Icons\\spell_deathknight_iceboundfortitude.png‎',
     'Defensive CDs Toggle',
 	'Enable or Disable usage of defensive cooldowns')
--- ProbablyEngine.toggle.create(
-    -- 'howling',
-    -- 'Interface\\Icons\\spell_frost_arcticwinds.png‎',
-    -- 'Toggle Howling Blast',
-	-- 'Enable or Disable Howling Blast to avoid cleave')
+ProbablyEngine.toggle.create(
+    'taunt',
+    'Interface\\Icons\\spell_nature_shamanrage.png‎',
+    'SoO Auto Taunt Toggle',
+	'Enable or Disable Auto Taunt in SoO\nImmerseus 1 Stack\nNorushen 4 Stacks\nSha of Pride 1 Stack\nIron Juggernaut 3 Stacks\nDark Shamans 5 Stacks\nGeneral Nazgrim 3 Stacks\nMalkorok 13 Stacks\nBlackfuse 3 Stacks\nThok 3 Stacks\nGarrosh 3 Stacks\nSET 2ND TANK TO FOCUS')
 -- ProbablyEngine.toggle.create(
     -- 'dnd',
     -- 'Interface\\Icons\\spell_shadow_deathanddecay.png‎',
