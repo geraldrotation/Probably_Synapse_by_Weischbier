@@ -468,6 +468,15 @@ function Synapse.Healthstone()
   end
 end
 
+-- Valid Boss pull, on bosses only!
+function Synapse.IsBoss()
+	if IsEncounterInProgress() then 
+		return true 
+	else 
+		return false
+	end
+end
+
 ProbablyEngine.library.register("Synapse", Synapse)
 
 
