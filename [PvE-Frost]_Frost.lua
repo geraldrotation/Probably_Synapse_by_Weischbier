@@ -99,11 +99,11 @@ ProbablyEngine.rotation.register_custom(251, "[PvE] Frost made by Weischbier v1.
 				"player.health < 20",							-- Conversion with less than 20% health  
 				"!player.buff(119975)" }, "player" },			-- Conversion with no Conversion Buff applied
 		
-			{ "!/cancelaura Conversion", {						-- Cancel Conversion EN Version
+			--[[{ "!/cancelaura Conversion", {						-- Cancel Conversion EN Version
 				"player.health > 90",							-- Cancel Conversion with at least 90% health  
-				"player.buff(119975)" }},						-- Cancel Conversion with Conversion Buff applied
+				"player.buff(119975)" }},						-- Cancel Conversion with Conversion Buff applied]]
 		
-			{ "!/cancelaura Umwandlung", {						-- Cancel Conversion DE Version
+			{ "!/script local p='player' for i=1,40 do local _,_,_,_,_,_,_,u,_,_,s=UnitBuff(p,i) if u==p and s==119975 then CancelUnitBuff(p,i) break end end", {						-- Cancel Conversion DE Version
 				"player.health > 90",							-- Cancel Conversion with at least 90% health  
 				"player.buff(119975)" }},						-- Cancel Conversion with Conversion Buff applied
 		}, "toggle.def" }, -- End of Defenseive Cooldowns
