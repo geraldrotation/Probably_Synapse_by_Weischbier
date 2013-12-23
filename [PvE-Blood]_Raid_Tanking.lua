@@ -214,11 +214,6 @@ ProbablyEngine.rotation.register_custom(250, "Don't USE! [PvE] Raid Tanking made
 				"player.runes.depleted",						-- Blood Tap with depleted runes 
 				"player.buff(114851).count >= 5",				-- Blood Tap with at least 5 stacks of Blood Charge
 				"player.spell(45529).exists" }},				-- Blood Tap when Blood Tap exists in our Spellbook
-	
-			{ "50842", {										-- Pestilence; made it available at all time so you don't need to switch rotation styles always. Figured it would make more sense this way. lol
-				"modifier.lcontrol",							-- Pestilence with Left Control (STRG) pressed down AND
-				"target.debuff(55078)",							-- Pestilence with Frost Fever applied AND
-				"target.debuff(55095)", }},						-- Pestilence with Blood Plague applied
 		}},
 		
 	}, { "target.exists",

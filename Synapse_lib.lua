@@ -2,6 +2,7 @@
 local Synapse = { }
 
 local lang = GetCVar("locale")
+local Spec = select(1,GetSpecializationInfo(GetSpecialization()))
 
 Synapse.items = { }
 Synapse.flagged = GetTime()
@@ -77,7 +78,7 @@ end
 -- Create Macros ------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------
 function Synapse.createAllMacros( ... )
-  local usedslots = select(2,GetNumMacros())
+  local usedslots = select(2,GetNumMacros())  
   if usedslots <= 13 then
 	DeleteMacro("SYN_TOGGLE");
 	DeleteMacro("SYN_AUDIBLE");
@@ -93,6 +94,10 @@ function Synapse.createAllMacros( ... )
 	DeleteMacro("SYN_NECRO");
 	DeleteMacro("SYN_PEST");
 	DeleteMacro("SYN_RAISE"); 	
+	if Spec == 250 then
+		DeleteMacro("SYN_TAUNT");
+		CreateMacro("SYN_TAUNT", "spell_nature_shamanrage", "/syn taunt", 1);	
+	end
 	CreateMacro("SYN_AUDIBLE", "inv_misc_bell_01", "/syn audible", 1);	
 	CreateMacro("SYN_MULTI", "Ability_Druid_Starfall", "/syn aoe", 1);	
 	CreateMacro("SYN_TOGGLE", "inv_sword_04", "/syn toggle", 1);
@@ -212,6 +217,18 @@ ProbablyEngine.command.register('syn', function(msg, box)
     else
       ProbablyEngine.buttons.toggle('dnd')
       itb:message("|cFF00B34ADeath and Decay on")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "dnd_on.mp3", "master") end
+    end
+  end 
+  
+  if Spec == 250 and command == 'taunt' then
+    if ProbablyEngine.toggle.states.taunt then
+      ProbablyEngine.buttons.toggle('taunt')
+      itb:message("|cFFB30000Aito Taunt off")
+	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "dnd_off.mp3", "master") end
+    else
+      ProbablyEngine.buttons.toggle('taunt')
+      itb:message("|cFF00B34AAuto Taunt on")
 	  if ProbablyEngine.toggle.states.audiblecues == true then PlaySoundFile(loc .. "dnd_on.mp3", "master") end
     end
   end
@@ -379,7 +396,6 @@ end
 end
 
 function ActualDotDmg()
-	local Spec 				= select(1,GetSpecializationInfo(GetSpecialization()))
 	local Mastery 			= GetMastery()
 	local CriticalChance	= GetCritChance()
 	local Power				= select(7,UnitDamage("player"))
@@ -474,6 +490,23 @@ function Synapse.IsBoss()
 		return true 
 	else 
 		return false
+	end
+end
+
+-- Blood: Threat Logic
+-- Need AggroImmediantley
+function Synapse.NeedAggroNow(unit, otherunit)
+	local threatStatus, threatText = UnitThreatSituation(unit, otherunit), { "low on threat",  "overnuking", "losing threat", "tanking securely" }
+	if ProbablyEngine.toggle.states.taunt == true or IsInRaid() then -- If you have Auto Taunt on or are in a RaidGroup, you cannot pass!
+		return false
+	end
+	if threatStatus <= 2 then
+		print("You are " .. statustxts[status + 1] .. ".")
+		return true
+	end
+	if threatStatus > 2 then
+		print("You are " .. statustxts[status + 1] .. ".")
+		return false		
 	end
 end
 

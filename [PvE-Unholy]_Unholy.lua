@@ -186,11 +186,6 @@ ProbablyEngine.rotation.register_custom(252, "[PvE] Unholy made by Weischbier v1
 				{ "108200", "player.spell(108200).exists" },	-- Remorseless Winter when Remorseless Winter exists in our Spellbook
 				{ "108201", "player.spell(108201).exists" },	-- Desecrated Ground when Desecrated Ground exists in our Spellbook
 			}, "modifier.ralt" },								-- Tier 6 Talent with Right Alt modifier pressed down
-			
-			--[[{ "50842", {									-- Pestilence; made it available at all time so you don't need to switch rotation styles always. Figured it would make more sense this way. lol
-				"modifier.lcontrol",							-- Pestilence with Left Control (STRG) pressed down
-				"target.debuff(55078)",							-- Pestilence with Frost Fever applied
-				"target.debuff(55095)", }},						-- Pestilence with Blood Plague applied]]
 		}},
 		
 	}, { "target.exists",
@@ -335,6 +330,8 @@ ProbablyEngine.rotation.register_custom(252, "[PvE] Unholy made by Weischbier v1
 {
 	{{ -- Misc Stuff
 		{ "48265" , "!player.buff(48265)" },	-- Unholy Presence when we don't have Unholy Presence active
+		
+		{ "46584" , "!pet.alive" },	-- Unholy Presence when we don't have Unholy Presence active
 		
 		{ "57330", { 							-- Horn of Winter
 			"target.exists", 					-- Horn of Winter when we have a target  
