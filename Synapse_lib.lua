@@ -2,7 +2,7 @@
 local Synapse = { }
 
 local lang = GetCVar("locale")
-local Spec = select(1,GetSpecializationInfo(GetSpecialization()))
+local Spec = GetSpecializationInfo(GetSpecialization())
 
 Synapse.items = { }
 Synapse.flagged = GetTime()
