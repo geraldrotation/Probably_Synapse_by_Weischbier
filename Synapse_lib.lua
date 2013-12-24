@@ -2,7 +2,6 @@
 local Synapse = { }
 
 local lang = GetCVar("locale")
-local Spec = GetSpecializationInfo(GetSpecialization())
 
 Synapse.items = { }
 Synapse.flagged = GetTime()
@@ -78,6 +77,7 @@ end
 -- Create Macros ------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------
 function Synapse.createAllMacros( ... )
+  local Spec = GetSpecializationInfo(GetSpecialization())
   local usedslots = select(2,GetNumMacros())  
   if usedslots <= 13 then
 	DeleteMacro("SYN_TOGGLE");
@@ -130,6 +130,7 @@ end
 ProbablyEngine.command.register('syn', function(msg, box)
   local command, text = msg:match("^(%S*)%s*(.-)$")
   local loc = "Interface\\AddOns\\Probably_Synapse_by_Weischbier\\sounds\\"
+  local Spec = GetSpecializationInfo(GetSpecialization())
   if command == 'synapse' or command == 'install' or command == 'macros' then
 	Synapse.createAllMacros()
   end
@@ -396,6 +397,7 @@ end
 end
 
 function ActualDotDmg()
+	local Spec = GetSpecializationInfo(GetSpecialization())
 	local Mastery 			= GetMastery()
 	local CriticalChance	= GetCritChance()
 	local Power				= select(7,UnitDamage("player"))
